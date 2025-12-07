@@ -1,0 +1,129 @@
+/* Tablet Styles */
+@media (max-width: 1024px) {
+    .card {
+        padding: 40px;
+        min-height: 420px;
+    }
+
+    .card h2 {
+        font-size: 1.5rem;
+    }
+
+    header h1 {
+        font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    }
+
+    header p {
+        font-size: 1rem;
+    }
+}
+
+/* Small Tablet Styles */
+@media (max-width: 768px) {
+    .card {
+        padding: 32px;
+        min-height: 400px;
+    }
+
+    .card:last-child {
+        min-height: 400px;
+        padding: 32px;
+        margin-bottom: 40px;
+    }
+
+    .card h2 {
+        font-size: 1.3rem;
+    }
+
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+
+    header p {
+        font-size: 0.95rem;
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 640px) {
+    :root {
+        --top: 80px;
+    }
+
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background: rgba(5, 5, 9, 0.98);
+        backdrop-filter: blur(50px);
+        padding: 20px;
+        gap: 16px;
+        border-bottom: 1px solid rgba(255, 26, 60, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .nav-menu a {
+        font-size: 1rem;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    header { 
+        padding: 100px 6vw 60px;
+    }
+
+    .stack-wrap { 
+        margin-top: 40px;
+    }
+
+    .stack-label {
+        top: 90px;
+    }
+
+    .card { 
+        padding: 28px;
+        min-height: 380px;
+    }
+
+    .card:last-child {
+        min-height: 380px;
+        padding: 28px;
+        margin-bottom: 40px;
+    }
+
+    .card h2 {
+        font-size: 1.15rem;
+        margin-bottom: 14px;
+    }
+
+    .card p {
+        font-size: 0.95rem;
+    }
+
+    .card ul li {
+        font-size: 0.9rem;
+        padding: 8px 0;
+    }
+
+    .cta-button {
+        padding: 14px;
+        font-size: 0.9rem;
+        margin-top: 20px;
+    }
+
+    header p {
+        font-size: 0.9rem;
+    }
+}
