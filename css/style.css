@@ -89,7 +89,7 @@ nav {
         inset 0 1px 0 rgba(255, 255, 255, 0.15),
         inset 0 -1px 0 rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    padding: 16px 2vw;
+    padding: clamp(12px, 1.5vh, 20px) 0;
 }
 
 nav::before {
@@ -126,15 +126,16 @@ nav::after {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1400px;
+    max-width: 100%;
+    width: 100%;
+    padding: 0 clamp(16px, 4vw, 40px);
     margin: 0;
-    margin-right: auto;
     position: relative;
     z-index: 2;
 }
 
 .nav-logo {
-    font-size: 1.6rem;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
     font-weight: 700;
     color: white;
     text-shadow: 
@@ -142,12 +143,13 @@ nav::after {
         0 0 20px rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: clamp(8px, 1vw, 12px);
+    flex-shrink: 0;
 }
 
 .nav-logo img {
-    height: 50px;
-    width: 60px;
+    height: clamp(40px, 5vh, 55px);
+    width: clamp(48px, 6vw, 65px);
     object-fit: cover;
     object-position: left center;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
@@ -174,14 +176,16 @@ nav::after {
 
 .nav-menu {
     display: flex;
-    gap: 32px;
+    gap: clamp(16px, 3vw, 32px);
     list-style: none;
+    margin-left: auto;
+    flex-shrink: 0;
 }
 
 .nav-menu a {
     color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: clamp(0.85rem, 1.2vw, 0.95rem);
     font-weight: 500;
     transition: all 0.3s ease;
     position: relative;
@@ -292,10 +296,14 @@ nav::after {
 }
 
 header {
-    padding: 120px 6vw 80px;
+    padding: clamp(100px, 15vh, 140px) clamp(20px, 5vw, 60px) clamp(60px, 10vh, 100px);
     text-align: center;
     position: relative;
     z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
 
 header::before {
@@ -347,7 +355,7 @@ header p {
 }
 
 main {
-    width: min(1100px, 92vw);
+    width: min(1100px, 90vw);
     margin: 0 auto;
     padding-bottom: 100px;
     position: relative;
@@ -524,11 +532,12 @@ main {
 }
 
 .title-card {
-    width: min(1200px, 90vw);
-    margin: 40px auto;
-    padding: 60px 80px;
-    min-height: 500px;
-    border-radius: 24px;
+    width: min(2000px, 70vw);
+    max-width: 90%;
+    margin: clamp(20px, 4vw, 40px) auto;
+    padding: clamp(30px, 4vh, 50px) clamp(40px, 5vw, 80px);
+    min-height: clamp(200px, 50vh, 300px);
+    border-radius: clamp(16px, 2vw, 24px);
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(40px) saturate(180%);
     -webkit-backdrop-filter: blur(40px) saturate(180%);
@@ -563,7 +572,9 @@ main {
 }
 
 .title-card img {
-    max-width: 100%;
+    max-width: 50%;
+    max-height: 50%;
+    width: auto;
     height: auto;
     object-fit: contain;
     position: relative;
