@@ -17,12 +17,21 @@ body {
     min-height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #f9fafb;
-    background: linear-gradient(135deg, #1a0000 0%, #050509 40%, #2d0000 100%);
+    background: url('../assets/images/BG_Watermark.png') center/cover no-repeat fixed;
     position: relative;
     overflow-x: hidden;
 }
 
 body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url('../assets/images/BG_Watermark.png') center/cover no-repeat fixed;
+    filter: blur(5px);
+    z-index: 0;
+}
+
+body::before_old {
     content: '';
     position: fixed;
     width: 400px;
@@ -374,7 +383,7 @@ main {
     width: 100%;
     min-height: 480px;
     padding: 50px;
-    margin-bottom: 40px;
+    margin-bottom: a;
     border-radius: 24px;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(40px) saturate(180%);
@@ -512,6 +521,63 @@ main {
     color: var(--accent);
     font-size: 1.2rem;
     text-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
+}
+
+.title-card {
+    width: min(1200px, 90vw);
+    margin: 40px auto;
+    padding: 60px 80px;
+    min-height: 500px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.6),
+        0 15px 30px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.title-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.08) 0%, 
+        transparent 60%);
+    border-radius: 24px;
+    pointer-events: none;
+}
+
+.title-card img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+}
+
+.title-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-6px);
+    box-shadow: 
+        0 40px 80px rgba(0, 0, 0, 0.7),
+        0 20px 40px rgba(139, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.25);
 }
 
 .cta-button {
