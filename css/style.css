@@ -20,6 +20,25 @@ body {
     background: url('../assets/images/BG_Watermark.png') center/cover no-repeat fixed;
     position: relative;
     overflow-x: hidden;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+    --cursor-opacity: 0;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    left: var(--mouse-x);
+    top: var(--mouse-y);
+    transform: translate(-50%, -50%);
+    opacity: var(--cursor-opacity);
+    transition: opacity 0.3s ease;
 }
 
 body::before {
@@ -318,6 +337,7 @@ header::before {
     filter: blur(100px);
     pointer-events: none;
     z-index: 0;
+    display: none;
 }
 
 header h1 {
@@ -554,7 +574,9 @@ main {
     justify-content: center;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-out;
+    transform-style: preserve-3d;
+    cursor: pointer;
 }
 
 .title-card::before {
@@ -564,11 +586,15 @@ main {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.08) 0%, 
-        transparent 60%);
-    border-radius: 24px;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.2), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
     pointer-events: none;
+    border-radius: clamp(16px, 2vw, 24px);
+}
+
+.title-card:hover::before {
+    opacity: 1;
 }
 
 .title-card img {
@@ -579,16 +605,22 @@ main {
     object-fit: contain;
     position: relative;
     z-index: 2;
+    transform: translateZ(50px);
+    transition: transform 0.3s ease;
+    pointer-events: none;
 }
 
 .title-card:hover {
     background: rgba(255, 255, 255, 0.08);
-    transform: translateY(-6px);
     box-shadow: 
         0 40px 80px rgba(0, 0, 0, 0.7),
         0 20px 40px rgba(139, 0, 0, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.25);
+}
+
+.title-card:hover img {
+    transform: translateZ(80px) scale(1.05);
 }
 
 .cta-button {

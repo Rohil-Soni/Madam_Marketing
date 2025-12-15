@@ -1,3 +1,18 @@
+// Global Cursor Glow Effect
+document.addEventListener('mousemove', (e) => {
+    const glow = document.querySelector('body::after');
+    document.body.style.setProperty('--mouse-x', `${e.clientX}px`);
+    document.body.style.setProperty('--mouse-y', `${e.clientY}px`);
+});
+
+document.addEventListener('mouseenter', () => {
+    document.body.style.setProperty('--cursor-opacity', '1');
+});
+
+document.addEventListener('mouseleave', () => {
+    document.body.style.setProperty('--cursor-opacity', '0');
+});
+
 // Mobile Menu Toggle
 const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('navMenu');
