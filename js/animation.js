@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Mouse move handler for 3D tilt
         card.addEventListener('mousemove', function(e) {
+            // Set cursor glow size larger when on card
+            document.body.style.setProperty('--cursor-size', '1px');
+            
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
@@ -79,6 +82,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Reset on mouse leave with ultra smooth animation
         card.addEventListener('mouseleave', function() {
+            // Reset cursor glow size back to smaller when leaving card
+            document.body.style.setProperty('--cursor-size', '1px');
+            
             // Stop current animation loop
             if (animationFrameId) {
                 cancelAnimationFrame(animationFrameId);
