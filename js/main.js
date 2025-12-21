@@ -43,16 +43,40 @@ function animateCircle() {
 
 animateCircle();
 
-// Add hover effect for nav links and interactive elements
-document.querySelectorAll('.nav-menu a, button, .cta-button, a').forEach(element => {
-    element.addEventListener('mouseenter', () => {
-        cursorCircle.classList.add('hovering-link');
-    });
+// Check if cursor is inside nav bar area - clean implementation
+let isCurrentlyInNav = false;
+
+function checkNavBarProximity() {
+    const nav = document.querySelector('nav');
+    if (!nav) return;
     
-    element.addEventListener('mouseleave', () => {
+    const navRect = nav.getBoundingClientRect();
+    
+    // Check if cursor is within nav bar bounds
+    const isInNavBar = (
+        mouseX >= navRect.left &&
+        mouseX <= navRect.right &&
+        mouseY >= navRect.top &&
+        mouseY <= navRect.bottom
+    );
+    
+    // Only update if state actually changed
+    if (isInNavBar && !isCurrentlyInNav) {
+        isCurrentlyInNav = true;
+        cursorCircle.classList.add('hovering-link');
+    } else if (!isInNavBar && isCurrentlyInNav) {
+        isCurrentlyInNav = false;
         cursorCircle.classList.remove('hovering-link');
-    });
-});
+    }
+}
+
+// Check nav proximity on every animation frame
+function animateWithProximity() {
+    checkNavBarProximity();
+    requestAnimationFrame(animateWithProximity);
+}
+
+animateWithProximity();
 
 // Mobile Menu Toggle
 const hamburger = document.getElementById('hamburger');
