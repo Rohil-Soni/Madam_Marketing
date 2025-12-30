@@ -3,7 +3,8 @@
 // ========================================
 const CHATBOT_CONFIG = {
     botName: "Madame Marketing Assistant",
-    greetingDelay: 2000, // milliseconds before showing greeting
+    greetingDelay: 9000, // milliseconds before showing greeting
+    greetingAutoDismiss: 13000, // milliseconds before auto-hiding greeting (12 seconds)
     typingDelay: 1000, // milliseconds for typing animation
 };
 
@@ -405,4 +406,31 @@ function scrollToBottom() {
 // ========================================
 // INITIALIZE ON LOAD
 // ========================================
-document.addEventListener('DOMContentLoaded', initChatbot);
+let pageLoaded = false;
+
+window.addEventListener('load', () => {
+    pageLoaded = true;
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    initChatbot();
+    
+    // Wait for page loader to finish (5 seconds) + additional delay
+    const showGreetingDelay = 6000; // Show 1 second after loader finishes
+    
+    setTimeout(() => {
+        // Show greeting with smooth animation
+        chatGreeting.classList.add('show');
+        
+        // Auto-dismiss greeting after it's been visible
+        setTimeout(() => {
+            if (!chatGreeting.classList.contains('hidden')) {
+                chatGreeting.classList.remove('show');
+                setTimeout(() => {
+                    chatGreeting.classList.add('hidden');
+                    chatNotification.classList.remove('hidden');
+                }, 600); // Wait for fade out animation
+            }
+        }, CHATBOT_CONFIG.greetingAutoDismiss);
+    }, showGreetingDelay);
+});
