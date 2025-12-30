@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/animation.css" />
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/booking-modal.css" />
+    <link rel="stylesheet" href="css/chatbot.css" />
 </head>
 <body>
     <div class="noise-overlay"></div>
@@ -171,10 +172,55 @@
         </div>
     </div>
 
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+        <!-- Greeting Bubble -->
+        <div class="chat-greeting" id="chatGreeting">
+            <div class="greeting-text">👋 Hi! Need help choosing the perfect service for your brand?</div>
+            <button class="greeting-close" id="greetingClose">&times;</button>
+        </div>
+        
+        <!-- Chatbot Button -->
+        <button class="chatbot-button" id="chatbotButton">
+            <svg class="chatbot-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span class="chatbot-notification" id="chatNotification">1</span>
+        </button>
+        
+        <!-- Chatbot Panel -->
+        <div class="chatbot-panel" id="chatbotPanel">
+            <div class="chatbot-header">
+                <div class="chatbot-header-info">
+                    <h3>Madame Marketing</h3>
+                    <span class="chatbot-status">Online</span>
+                </div>
+                <button class="chatbot-close" id="chatbotClose">&times;</button>
+            </div>
+            
+            <div class="chatbot-messages" id="chatbotMessages">
+                <!-- Messages will be inserted here -->
+            </div>
+            
+            <div class="chatbot-input-area">
+                <div class="quick-replies" id="quickReplies"></div>
+                <div class="chatbot-input-wrapper">
+                    <input type="text" id="chatbotInput" class="chatbot-input" placeholder="Type your message...">
+                    <button class="chatbot-send" id="chatbotSend">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript -->
     <script src="js/animation.js"></script>
     <script src="js/main.js"></script>
     <script src="js/smooth-scroll.js"></script>
     <script src="js/calendar-intergration.js"></script>
+    <script src="js/chatbot.js"></script>
 </body>
 </html>
