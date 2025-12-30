@@ -61,12 +61,35 @@ function initChatbot() {
         chatNotification.classList.add('hidden');
     });
     
-    // Open chatbot
-    chatbotButton.addEventListener('click', openChatbot);
+    // Open/close chatbot on button click (toggle)
+    chatbotButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (chatbotPanel.classList.contains('open')) {
+            closeChatbot();
+        } else {
+            openChatbot();
+        }
+    });
+    
     chatGreeting.addEventListener('click', openChatbot);
     
     // Close chatbot
     chatbotClose.addEventListener('click', closeChatbot);
+    
+    // Close chatbot when clicking outside
+    document.addEventListener('click', (e) => {
+        if (chatbotPanel.classList.contains('open')) {
+            // Check if click is outside both panel and button
+            if (!chatbotPanel.contains(e.target) && !chatbotButton.contains(e.target)) {
+                closeChatbot();
+            }
+        }
+    });
+    
+    // Prevent closing when clicking inside the panel
+    chatbotPanel.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
     
     // Send message
     chatbotSend.addEventListener('click', sendMessage);
@@ -97,11 +120,7 @@ function openChatbot() {
 function closeChatbot() {
     chatbotPanel.classList.remove('open');
     document.body.classList.remove('blur-active');
-    
-    // Remove blur class after animation completes
-    setTimeout(() => {
-        document.body.classList.remove('chatbot-active');
-    }, 600);
+    document.body.classList.remove('chatbot-active');
 }
 
 // ========================================
