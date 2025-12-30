@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/animation.css" />
     <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/booking-modal.css" />
 </head>
 <body>
     <div class="noise-overlay"></div>
@@ -93,14 +94,87 @@
                 <div class="card-title">Ready to Level Up?</div>
                 <h2>Let's Create Something Bold Together</h2>
                 <p>Whether you need a complete brand refresh or strategic marketing support, we're here to help your brand shine bold. Let's discuss how Madame Marketing can take your vision to the next level.</p>
-                <button class="cta-button" onclick="alert('Contact form coming soon!')">Book Your Consultation</button>
+                <button class="cta-button" id="bookCallBtn">Book Your Consultation</button>
             </article>
         </div>
     </main>
+
+    <!-- Booking Modal -->
+    <div class="booking-modal" id="bookingModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h2 class="modal-title">Book Your Consultation</h2>
+            
+            <div class="booking-container">
+                <!-- Calendar Section -->
+                <div class="calendar-section">
+                    <div class="calendar-header">
+                        <button class="calendar-nav" id="prevMonth">&lt;</button>
+                        <h3 class="calendar-month" id="calendarMonth"></h3>
+                        <button class="calendar-nav" id="nextMonth">&gt;</button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                    
+                    <div class="time-slots" id="timeSlots"></div>
+                </div>
+
+                <!-- Form Section -->
+                <div class="form-section">
+                    <form id="bookingForm">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company">Company (Optional)</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="service">Service Interest *</label>
+                            <select id="service" name="service" required>
+                                <option value="">Select a service</option>
+                                <option value="brand-strategy">Brand Strategy & Development</option>
+                                <option value="logo-design">Logo & Visual Identity Design</option>
+                                <option value="social-media">Social Media Management</option>
+                                <option value="video-motion">Video & Motion Graphics</option>
+                                <option value="full-package">Full Marketing Package</option>
+                                <option value="consultation">General Consultation</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message (Optional)</label>
+                            <textarea id="message" name="message" rows="3"></textarea>
+                        </div>
+
+                        <div class="selected-datetime" id="selectedDateTime">
+                            <strong>Selected:</strong> <span id="dateTimeDisplay">Please select a date and time</span>
+                        </div>
+
+                        <button type="submit" class="submit-button" id="submitBooking" disabled>Confirm Booking</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- JavaScript -->
     <script src="js/animation.js"></script>
     <script src="js/main.js"></script>
     <script src="js/smooth-scroll.js"></script>
+    <script src="js/calendar-intergration.js"></script>
 </body>
 </html>
