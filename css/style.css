@@ -1,13 +1,14 @@
 /* ============================================
    MADAME MARKETING - STYLE.CSS
-   Hybrid: nothuman.ai bold sections + glassmorphic cards
+   Cherry Red, White & Black theme
    ============================================ */
 
 :root {
-    --bg: #050509;
-    --card: #06050a;
+    --bg: #000000;
+    --card: #111111;
     --accent: #DC143C;
     --accent-soft: #EE6A70;
+    --white: #ffffff;
     --top: 100px;
     --gap: 16px;
     --section-padding: clamp(80px, 12vh, 160px);
@@ -23,7 +24,7 @@
 body {
     min-height: 100vh;
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #f9fafb;
+    color: var(--white);
     background: var(--bg);
     position: relative;
     overflow-x: hidden;
@@ -52,6 +53,7 @@ body::after {
     will-change: transform, opacity;
 }
 
+
 .cursor-circle {
     position: fixed;
     width: 30px;
@@ -67,10 +69,7 @@ body::after {
                 height 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
                 opacity 0.3s ease;
     opacity: 0;
-    background: rgba(0, 0, 0, 0.1);
-    filter: none;
-    backdrop-filter: blur(5px) brightness(1.2);
-    box-shadow: none;
+    background: transparent;
     will-change: transform, opacity;
 }
 
@@ -79,31 +78,22 @@ body::after {
 }
 
 .cursor-circle.hovering-link {
-    width: 100px;
-    height: 100px;
-    border: none;
-    background: radial-gradient(circle, rgba(220, 20, 60, 0.5) 0%, rgba(220, 20, 60, 0.3) 40%, transparent 70%);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 0 60px rgba(220, 20, 60, 0.6), 0 0 100px rgba(220, 20, 60, 0.4);
-    filter: blur(15px);
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--accent);
+    background: rgba(220, 20, 60, 0.1);
 }
 
 body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background: linear-gradient(160deg, #050509 0%, #0a0a18 40%, #0d0812 70%, #050509 100%);
+    background: #000000;
     z-index: 0;
 }
 
 .noise-overlay {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E");
-    mix-blend-mode: soft-light;
-    z-index: 1;
+    display: none;
 }
 
 /* Common */
@@ -116,57 +106,19 @@ body::before {
 
 .accent-text {
     color: var(--accent);
-    text-shadow:
-        0 0 50px rgba(220, 20, 60, 0.6),
-        0 0 100px rgba(220, 20, 60, 0.3);
 }
 
 /* ============================================
-   NAVIGATION
+   NAVIGATION — Centered pill navbar
    ============================================ */
 
 nav {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(40px) saturate(180%);
-    -webkit-backdrop-filter: blur(40px) saturate(180%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
     z-index: 1000;
-    padding: clamp(12px, 1.5vh, 20px) 0;
-    overflow: hidden;
-    cursor: none;
-}
-
-nav::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg,
-        rgba(255, 255, 255, 0.05) 0%,
-        transparent 60%);
-    pointer-events: none;
-}
-
-nav::after {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    left: -2px;
-    right: -2px;
-    height: 2px;
-    background: linear-gradient(90deg,
-        transparent,
-        rgba(255, 255, 255, 0.15) 20%,
-        rgba(220, 20, 60, 0.3) 50%,
-        rgba(255, 255, 255, 0.15) 80%,
-        transparent);
-    filter: blur(2px);
-    opacity: 0.5;
+    padding: clamp(14px, 1.8vh, 24px) 0;
 }
 
 .nav-container {
@@ -175,7 +127,7 @@ nav::after {
     align-items: center;
     max-width: 100%;
     width: 100%;
-    padding: 0 clamp(16px, 4vw, 40px);
+    padding: 0 clamp(20px, 4vw, 48px);
     margin: 0;
     position: relative;
     z-index: 2;
@@ -185,7 +137,6 @@ nav::after {
     font-size: clamp(1.2rem, 2vw, 1.6rem);
     font-weight: 700;
     color: white;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     gap: clamp(8px, 1vw, 12px);
@@ -193,11 +144,10 @@ nav::after {
 }
 
 .nav-logo img {
-    height: clamp(40px, 5vh, 55px);
-    width: clamp(48px, 6vw, 65px);
+    height: clamp(36px, 5vh, 48px);
+    width: clamp(44px, 6vw, 58px);
     object-fit: cover;
     object-position: left center;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
     transition: transform 0.3s ease;
 }
 
@@ -212,52 +162,44 @@ nav::after {
 
 .nav-logo span {
     color: var(--accent);
-    text-shadow:
-        0 0 30px rgba(220, 20, 60, 0.8),
-        0 0 60px rgba(220, 20, 60, 0.4);
     margin-left: 0.2em;
 }
 
+/* Pill-shaped nav menu */
 .nav-menu {
     display: flex;
-    gap: clamp(16px, 3vw, 32px);
+    gap: 4px;
     list-style: none;
-    margin-left: auto;
-    flex-shrink: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 6px 8px;
 }
 
 .nav-menu a {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.75);
     text-decoration: none;
-    font-size: clamp(0.8rem, 1.1vw, 0.9rem);
+    font-size: clamp(0.78rem, 1vw, 0.88rem);
     font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    transition: color 0.3s ease;
+    letter-spacing: 0.03em;
+    transition: color 0.3s ease, background 0.3s ease;
     position: relative;
-    padding: 8px 16px;
-    border-radius: 12px;
-    z-index: 100;
-}
-
-.nav-menu a::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    padding: 10px 20px;
+    border-radius: 50px;
+    white-space: nowrap;
 }
 
 .nav-menu a:hover {
     color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
 }
 
-.nav-menu a:hover::before {
-    opacity: 1;
+.nav-menu a.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .hamburger {
@@ -276,7 +218,6 @@ nav::after {
     background: var(--accent);
     border-radius: 2px;
     transition: transform 0.3s ease, opacity 0.3s ease;
-    box-shadow: 0 0 15px rgba(220, 20, 60, 0.6);
     display: block;
 }
 
@@ -299,10 +240,8 @@ nav::after {
     right: 40px;
     width: 50px;
     height: 50px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: var(--accent);
+    border: none;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -329,7 +268,6 @@ nav::after {
     content: "↑";
     font-size: 24px;
     color: white;
-    text-shadow: 0 0 20px rgba(220, 20, 60, 0.6);
 }
 
 /* ============================================
@@ -357,8 +295,7 @@ nav::after {
     transform: translate(-50%, -50%);
     width: 800px;
     height: 800px;
-    background: radial-gradient(circle, rgba(220, 20, 60, 0.12) 0%, transparent 60%);
-    filter: blur(100px);
+    background: radial-gradient(circle, rgba(220, 20, 60, 0.08) 0%, transparent 60%);
     pointer-events: none;
     z-index: 0;
 }
@@ -375,12 +312,11 @@ nav::after {
     letter-spacing: 0.35em;
     text-transform: uppercase;
     color: var(--accent);
-    border: 1px solid rgba(220, 20, 60, 0.3);
+    border: 1px solid rgba(220, 20, 60, 0.4);
     padding: 8px 24px;
     border-radius: 50px;
     margin-bottom: 40px;
-    background: rgba(220, 20, 60, 0.05);
-    backdrop-filter: blur(20px);
+    background: rgba(220, 20, 60, 0.08);
 }
 
 .hero-title {
@@ -412,8 +348,8 @@ nav::after {
 
 .hero-cta {
     padding: 16px 40px;
-    background: rgba(220, 20, 60, 0.15);
-    border: 1px solid rgba(220, 20, 60, 0.4);
+    background: var(--accent);
+    border: none;
     border-radius: 50px;
     color: white;
     font-size: 0.9rem;
@@ -422,30 +358,15 @@ nav::after {
     text-transform: uppercase;
     cursor: pointer;
     transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
-                box-shadow 0.4s ease;
+                background 0.3s ease;
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(20px);
     will-change: transform;
-}
-
-.hero-cta::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(220, 20, 60, 0.3), transparent);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    border-radius: 50px;
 }
 
 .hero-cta:hover {
     transform: translate3d(0, -3px, 0);
-    box-shadow: 0 20px 40px rgba(220, 20, 60, 0.2);
-}
-
-.hero-cta:hover::before {
-    opacity: 1;
+    background: #b01030;
 }
 
 .hero-secondary {
@@ -498,7 +419,7 @@ nav::after {
 .scroll-line {
     width: 1px;
     height: 40px;
-    background: linear-gradient(to bottom, rgba(220, 20, 60, 0.6), transparent);
+    background: linear-gradient(to bottom, var(--accent), transparent);
     animation: scrollPulse 2s ease-in-out infinite;
 }
 
@@ -619,41 +540,23 @@ nav::after {
     justify-content: center;
 }
 
-/* Title Card (glassmorphic, used in showcase) */
+/* Title Card */
 .title-card {
     width: 100%;
     max-width: 900px;
     padding: clamp(40px, 5vh, 80px) clamp(40px, 5vw, 80px);
     min-height: clamp(250px, 40vh, 400px);
     border-radius: 24px;
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(40px) saturate(180%);
-    -webkit-backdrop-filter: blur(40px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s ease-out;
-    transform-style: preserve-3d;
+    transition: transform 0.3s ease-out, border-color 0.3s ease;
     cursor: pointer;
     will-change: transform;
-}
-
-.title-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.15), transparent 50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    border-radius: 24px;
-}
-
-.title-card:hover::before {
-    opacity: 1;
 }
 
 .title-card img {
@@ -664,18 +567,16 @@ nav::after {
     object-fit: contain;
     position: relative;
     z-index: 2;
-    transform: translateZ(50px);
     transition: transform 0.3s ease;
     pointer-events: none;
 }
 
 .title-card:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(220, 20, 60, 0.3);
 }
 
 .title-card:hover img {
-    transform: translateZ(80px) scale(1.05);
+    transform: scale(1.05);
 }
 
 /* ============================================
@@ -764,7 +665,6 @@ nav::after {
 
 .service-item:hover .service-name {
     color: white;
-    text-shadow: 0 0 30px rgba(220, 20, 60, 0.3);
 }
 
 .service-arrow {
@@ -854,47 +754,15 @@ nav::after {
     padding: 48px;
     margin-bottom: 24px;
     border-radius: 24px;
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(40px) saturate(180%);
-    -webkit-backdrop-filter: blur(40px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    border-left: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow:
-        0 30px 60px rgba(0, 0, 0, 0.5),
-        0 15px 30px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     overflow: hidden;
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s ease;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     will-change: transform;
-}
-
-.card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, transparent 60%);
-    border-radius: 24px;
-    pointer-events: none;
-}
-
-/* Hover glow overlay — avoids box-shadow/background repaint on .card */
-.card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 24px;
-    box-shadow:
-        0 40px 80px rgba(0, 0, 0, 0.6),
-        0 20px 40px rgba(220, 20, 60, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-    z-index: 0;
 }
 
 .card > * {
@@ -904,15 +772,12 @@ nav::after {
 
 .card:hover {
     transform: translate3d(0, -6px, 0) !important;
+    border-color: rgba(220, 20, 60, 0.3);
 }
 
-.card:hover::after {
-    opacity: 1;
-}
-
-.card:nth-child(2) { transform: scale(0.98); }
-.card:nth-child(3) { transform: scale(0.96); }
-.card:nth-child(4) { transform: scale(0.94); }
+.card:nth-child(1) { top: 100px; }
+.card:nth-child(2) { top: 140px; transform: scale(0.98); }
+.card:nth-child(3) { top: 180px; transform: scale(0.96); }
 
 .card:last-child {
     margin-bottom: 60px;
@@ -925,7 +790,6 @@ nav::after {
     color: var(--accent);
     margin-bottom: 16px;
     font-weight: 600;
-    text-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
 }
 
 .card h2 {
@@ -940,6 +804,70 @@ nav::after {
     color: rgba(255, 255, 255, 0.55);
     line-height: 1.8;
     max-width: 650px;
+}
+
+/* Card color variants */
+.card-red {
+    background: #DC143C;
+    border: none;
+}
+
+.card-red .card-title {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.card-red h2 {
+    color: #ffffff;
+}
+
+.card-red p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.card-red:hover {
+    border-color: transparent;
+}
+
+.card-white {
+    background: #ffffff;
+    border: none;
+}
+
+.card-white .card-title {
+    color: #DC143C;
+}
+
+.card-white h2 {
+    color: #000000;
+}
+
+.card-white p {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.card-white:hover {
+    border-color: transparent;
+}
+
+.card-black {
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-black .card-title {
+    color: #DC143C;
+}
+
+.card-black h2 {
+    color: #ffffff;
+}
+
+.card-black p {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.card-black:hover {
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* ============================================
@@ -1017,10 +945,10 @@ nav::after {
 .marquee-item {
     flex-shrink: 0;
     padding: 20px 40px;
-    background: rgba(255, 255, 255, 0.03);
+    background: #111111;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.4);
     font-size: 0.85rem;
     font-weight: 500;
     letter-spacing: 0.1em;
@@ -1030,9 +958,8 @@ nav::after {
 }
 
 .marquee-item:hover {
-    background: rgba(255, 255, 255, 0.06);
-    color: rgba(255, 255, 255, 0.5);
-    border-color: rgba(220, 20, 60, 0.2);
+    color: white;
+    border-color: var(--accent);
 }
 
 @keyframes marqueeScroll {
@@ -1151,8 +1078,7 @@ nav::after {
     transform: translate(-50%, -50%);
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(220, 20, 60, 0.1) 0%, transparent 60%);
-    filter: blur(100px);
+    background: radial-gradient(circle, rgba(220, 20, 60, 0.06) 0%, transparent 60%);
     pointer-events: none;
     z-index: 0;
 }
@@ -1263,18 +1189,19 @@ nav::after {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
     color: rgba(255, 255, 255, 0.5);
-    transition: transform 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    background: rgba(255, 255, 255, 0.02);
+    transition: transform 0.3s ease, color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    background: transparent;
     will-change: transform;
 }
 
 .social-link:hover {
-    border-color: rgba(220, 20, 60, 0.4);
+    border-color: var(--accent);
+    background: var(--accent);
     color: white;
     transform: translate3d(0, -3px, 0);
 }
