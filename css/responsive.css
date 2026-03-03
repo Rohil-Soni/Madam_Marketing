@@ -1,38 +1,87 @@
-/* Tablet Styles */
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Large Tablet */
 @media (max-width: 1024px) {
+    .about-grid {
+        grid-template-columns: 160px 1fr;
+        gap: 40px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+
+    .showcase-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .showcase-description {
+        text-align: left;
+    }
+
     .card {
+        min-height: 300px;
         padding: 40px;
-        min-height: 420px;
-    }
-
-    .card h2 {
-        font-size: 1.5rem;
-    }
-
-    header h1 {
-        font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-    }
-
-    header p {
-        font-size: 1rem;
     }
 }
 
-/* Small Tablet Styles */
+/* Tablet */
 @media (max-width: 768px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .about-label {
+        position: static;
+    }
+
+    .showcase-title {
+        font-size: clamp(2.5rem, 10vw, 4rem);
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 7vw, 3.5rem);
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .service-item {
+        grid-template-columns: 40px 1fr 30px;
+        padding: 20px 0;
+    }
+
+    .service-item.active .service-detail {
+        padding: 12px 0 8px 40px;
+    }
+
     .card {
-        padding: 32px;
-        min-height: 400px;
+        min-height: 260px;
+        padding: 36px;
     }
 
-    .card:last-child {
-        min-height: 400px;
-        padding: 32px;
-        margin-bottom: 40px;
+    .clients-title {
+        font-size: clamp(2rem, 8vw, 3rem);
     }
 
-    .card h2 {
-        font-size: 1.3rem;
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .footer-brand {
+        grid-column: auto;
     }
 
     .back-to-top {
@@ -42,15 +91,15 @@
         height: 45px;
     }
 
-    header p {
-        font-size: 0.95rem;
+    .hero-scroll-indicator {
+        bottom: 24px;
     }
 }
 
-/* Mobile Styles */
+/* Mobile */
 @media (max-width: 640px) {
     :root {
-        --top: 80px;
+        --section-padding: clamp(60px, 10vh, 100px);
     }
 
     .nav-menu {
@@ -80,50 +129,66 @@
         display: flex;
     }
 
-    header { 
+    .hero-section {
         padding: 100px 6vw 60px;
     }
 
-    .stack-wrap { 
-        margin-top: 40px;
+    .hero-title {
+        font-size: clamp(1.8rem, 8vw, 2.8rem);
     }
 
-    .stack-label {
-        top: 90px;
+    .hero-subtitle {
+        font-size: 0.9rem;
     }
 
-    .card { 
-        padding: 28px;
-        min-height: 380px;
+    .hero-badge {
+        font-size: 0.65rem;
+        margin-bottom: 28px;
     }
 
-    .card:last-child {
-        min-height: 380px;
-        padding: 28px;
-        margin-bottom: 40px;
+    .showcase-title {
+        font-size: clamp(2rem, 12vw, 3.5rem);
+    }
+
+    .service-name {
+        font-size: clamp(1rem, 4vw, 1.3rem);
+    }
+
+    .service-detail p {
+        font-size: 0.85rem;
+    }
+
+    .card {
+        min-height: 220px;
+        padding: 28px 24px;
     }
 
     .card h2 {
-        font-size: 1.15rem;
-        margin-bottom: 14px;
+        font-size: 1.3rem;
     }
 
     .card p {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
     }
 
-    .card ul li {
-        font-size: 0.9rem;
-        padding: 8px 0;
+    .cta-quote {
+        font-size: clamp(1.5rem, 6vw, 2.2rem);
     }
 
-    .cta-button {
-        padding: 14px;
+    .cta-subtext {
         font-size: 0.9rem;
-        margin-top: 20px;
     }
 
-    header p {
-        font-size: 0.9rem;
+    .marquee-item {
+        padding: 14px 28px;
+        font-size: 0.75rem;
+    }
+
+    .title-card {
+        min-height: 200px;
+    }
+
+    .title-card img {
+        max-width: 50%;
     }
 }

@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const loader = document.getElementById('pageLoader');
     const body = document.body;
     
-    // Minimum display time for loader (5 seconds)
-    const minLoadTime = 5000;
+    // Minimum display time for loader (2.5 seconds)
+    const minLoadTime = 2500;
     const startTime = Date.now();
     
     // Wait for page to fully load

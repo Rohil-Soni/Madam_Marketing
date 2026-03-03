@@ -66,6 +66,31 @@ const calendarGrid = document.getElementById('calendarGrid');
 const prevMonthBtn = document.getElementById('prevMonth');
 const nextMonthBtn = document.getElementById('nextMonth');
 const timeSlotsContainer = document.getElementById('timeSlots');
+const calendarSection = document.getElementById('calendarSection');
+const dateTimeSummary = document.getElementById('dateTimeSummary');
+const summaryText = document.getElementById('summaryText');
+
+// Toggle calendar expand/collapse via summary bar
+dateTimeSummary.addEventListener('click', () => {
+    const isCollapsed = calendarSection.classList.contains('collapsed');
+    if (isCollapsed) {
+        expandCalendar();
+    } else {
+        collapseCalendar();
+    }
+});
+
+function collapseCalendar() {
+    calendarSection.classList.add('collapsed');
+    dateTimeSummary.classList.remove('collapsed');
+    dateTimeSummary.classList.remove('expanded');
+}
+
+function expandCalendar() {
+    calendarSection.classList.remove('collapsed');
+    dateTimeSummary.classList.remove('collapsed');
+    dateTimeSummary.classList.add('expanded');
+}
 
 function initializeCalendar() {
     renderCalendar();
@@ -216,6 +241,24 @@ function selectTime(time, element) {
     // Update display
     updateDateTime();
     updateSubmitButton();
+    
+    // Collapse calendar and show summary
+    if (selectedDate && selectedTime) {
+        updateSummaryText();
+        setTimeout(() => {
+            collapseCalendar();
+        }, 300);
+    }
+}
+
+function updateSummaryText() {
+    if (selectedDate && selectedTime) {
+        const options = { weekday: 'short', month: 'short', day: 'numeric' };
+        const dateStr = selectedDate.toLocaleDateString('en-US', options);
+        summaryText.textContent = `📅 ${dateStr} at ${selectedTime}`;
+    } else {
+        summaryText.textContent = 'No date & time selected';
+    }
 }
 
 function updateDateTime() {
@@ -354,4 +397,10 @@ function resetForm() {
     timeSlotsContainer.innerHTML = '';
     updateDateTime();
     updateSubmitButton();
+    
+    // Reset calendar visibility
+    calendarSection.classList.remove('collapsed');
+    dateTimeSummary.classList.add('collapsed');
+    dateTimeSummary.classList.remove('expanded');
+    summaryText.textContent = 'No date & time selected';
 }

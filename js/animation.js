@@ -9,7 +9,15 @@ document.addEventListener('DOMContentLoaded', function() {
         let currentScale = 1;
         let animationFrameId = null;
         
-        // Smooth animation loop
+        // Cache card rect — re-measure only on resize/scroll
+        let cardRect = card.getBoundingClientRect();
+        let rectDirty = false;
+
+        function invalidateCardRect() { rectDirty = true; }
+        window.addEventListener('scroll', invalidateCardRect, { passive: true });
+        window.addEventListener('resize', invalidateCardRect, { passive: true });
+        
+        // Smooth animation loop — only writes transform (composite-only)
         function animate() {
             card.style.transform = `perspective(1500px) rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg) translateZ(${currentTranslateZ}px) scale(${currentScale})`;
             animationFrameId = requestAnimationFrame(animate);
@@ -17,32 +25,30 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Mouse move handler for 3D tilt
         card.addEventListener('mousemove', function(e) {
-            // Set cursor glow size larger when on card
-            document.body.style.setProperty('--cursor-size', '1px');
+            // Re-measure only when dirty
+            if (rectDirty) {
+                cardRect = card.getBoundingClientRect();
+                rectDirty = false;
+            }
+
+            const x = e.clientX - cardRect.left;
+            const y = e.clientY - cardRect.top;
             
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            const centerX = cardRect.width / 2;
+            const centerY = cardRect.height / 2;
             
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            // Calculate distance from center (0 to 1)
             const deltaX = (x - centerX) / centerX;
             const deltaY = (y - centerY) / centerY;
             const distanceFromCenter = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
             
-            // Distance-based intensity (closer to center = less tilt)
             const intensityFactor = Math.min(distanceFromCenter, 1);
             
-            // Calculate rotation angles with distance-based intensity
-            const maxTilt = 8; // Maximum tilt angle in degrees
+            const maxTilt = 8;
             const targetRotateX = (deltaY * maxTilt * intensityFactor);
             const targetRotateY = (deltaX * maxTilt * intensityFactor);
             
-            // Calculate Z-axis depth with distance consideration
             const distanceFromCenterX = Math.abs(x - centerX);
-            const isNearHorizontalCenter = distanceFromCenterX < rect.width / 6;
+            const isNearHorizontalCenter = distanceFromCenterX < cardRect.width / 6;
             
             let targetTranslateZ = 0;
             if (isNearHorizontalCenter) {
@@ -54,10 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             
-            // Target scale based on distance from center
             const targetScale = 1 + (intensityFactor * 0.03);
             
-            // Ultra smooth interpolation with adaptive smoothing
             const baseSmoothFactor = 0.08;
             const distanceSmooth = baseSmoothFactor * (1 - intensityFactor * 0.3);
             
@@ -66,32 +70,25 @@ document.addEventListener('DOMContentLoaded', function() {
             currentTranslateZ += (targetTranslateZ - currentTranslateZ) * distanceSmooth;
             currentScale += (targetScale - currentScale) * distanceSmooth;
             
-            // Calculate percentages for gradient effect
-            const percentX = (x / rect.width) * 100;
-            const percentY = (y / rect.height) * 100;
+            const percentX = (x / cardRect.width) * 100;
+            const percentY = (y / cardRect.height) * 100;
             
-            // Update CSS variables for dynamic lighting
+            // CSS vars for gradient lighting — paint-only, no layout
             card.style.setProperty('--x', `${percentX}%`);
             card.style.setProperty('--y', `${percentY}%`);
             
-            // Start animation loop if not running
             if (!animationFrameId) {
                 animate();
             }
-        });
+        }, { passive: true });
         
-        // Reset on mouse leave with ultra smooth animation
+        // Reset on mouse leave
         card.addEventListener('mouseleave', function() {
-            // Reset cursor glow size back to smaller when leaving card
-            document.body.style.setProperty('--cursor-size', '1px');
-            
-            // Stop current animation loop
             if (animationFrameId) {
                 cancelAnimationFrame(animationFrameId);
                 animationFrameId = null;
             }
             
-            // Smoothly reset to original state
             function resetAnimation() {
                 const resetSpeed = 0.12;
                 currentRotateX += (0 - currentRotateX) * resetSpeed;
@@ -101,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 card.style.transform = `perspective(1500px) rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg) translateZ(${currentTranslateZ}px) scale(${currentScale})`;
                 
-                // Stop when close enough to original
                 if (Math.abs(currentRotateX) < 0.01 && Math.abs(currentRotateY) < 0.01 && Math.abs(currentTranslateZ) < 0.1 && Math.abs(currentScale - 1) < 0.001) {
                     currentRotateX = 0;
                     currentRotateY = 0;
@@ -117,9 +113,11 @@ document.addEventListener('DOMContentLoaded', function() {
             resetAnimation();
         });
         
-        // Remove transition on mouse enter for smooth tracking
         card.addEventListener('mouseenter', function() {
             card.style.transition = 'none';
+            // Refresh rect on enter since card may have scrolled into new position
+            cardRect = card.getBoundingClientRect();
+            rectDirty = false;
         });
     }
 });

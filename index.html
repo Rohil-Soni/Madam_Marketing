@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Madame Marketing - Creative Agency</title>
+    <meta name="description" content="Madame Marketing — A creative marketing agency where strategy meets taste. Brand development, social media, branding, photography, videography, and more.">
+    <meta name="theme-color" content="#050509">
+    <link rel="icon" type="image/png" href="assets/images/icons/Resized_Logo/2.png">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css" />
@@ -12,6 +15,11 @@
     <link rel="stylesheet" href="css/booking-modal.css" />
     <link rel="stylesheet" href="css/chatbot.css" />
     <link rel="stylesheet" href="css/loader.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 </head>
 <body class="loading">
     <!-- Page Loader -->
@@ -35,14 +43,15 @@
     <nav>
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="assets/images/icons/Madam Marketing Final Transparent Coloured/2-crop.png">
+                <img src=\"assets/images/icons/Madam Marketing Final Transparent Coloured/2-crop.png\" alt=\"Madame Marketing Logo\">
                 <div class="nav-text">Madame <span>Marketing</span></div>
             </div>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#process">Process</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#clients">Clients</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="hamburger" id="hamburger">
@@ -56,102 +65,282 @@
     <!-- Back to Top Button -->
     <div class="back-to-top" id="backToTop"></div>
 
-    <!-- Hero Section -->
-    <header id="home">
-        <article class="title-card">
-            <img src="assets/images/icons/Resized_Logo/3.png" alt="Madame Marketing"/>
-        </article>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-        <div class="stack-wrap">
-                    <!-- Who We Are -->
-            <article class="card">
-                <div class="card-title">What Are We?</div>
-                <h2>Where Strategy Meets Taste</h2>
-                <p>Madame Marketing is not just an agency. It's a marketing house where strategy meets taste. We don't just plan campaigns, we step in, take charge, and make your brand look, sound, and sell better. From ideas to executions, we ensure your brand shows up sharp, confident, and impossible to ignore.</p>
-                <div class="divider"></div>
-                <p style="font-size: 0.9em; color: rgba(255, 255, 255, 0.7); margin-top: auto;"><strong>Our Belief:</strong> Good marketing needs taste, clarity, and commitment.</p>
-            </article>
-
-            <!-- What We Do -->
-            <article class="card">
-                <div class="card-title">What We Do</div>
-                <h2>Structure, Taste & Clarity</h2>
-                <p>We exist to bring structure, taste and clarity to brands' marketing. We work with brands that want marketing with direction, not noise. We step in, take control of the strategy, and execute work that feels aligned, elevated, and effective. No hand-offs. No confusion. Just focused, well-done work.</p>
-            </article>
-
-            <!-- Services -->
-            <article class="card" id="services">
-                <div class="card-title">Our Services</div>
-                <h2>Comprehensive Marketing Solutions</h2>
-                
-                <h3>Brand Development</h3>
-                <p>We help build brands from the ground up by shaping their positioning, voice, and overall direction. We work at the core of your brand, defining its positioning, voice, and direction before anything goes live. This creates a clear foundation that guides how your brand communicates, appears, and evolves, keeping every decision consistent, purposeful, and growth-focused.</p>
-                
-                <h3>Social Media</h3>
-                <p>From strategic content planning to creation, filming, editing, and final publishing, we manage your social media presence end-to-end. Every reel, post, and caption is thoughtfully crafted to reflect your brand's identity, tone, and positioning while remaining relevant within the evolving digital landscape. Our focus is on consistency, visual refinement, and meaningful engagement, ensuring your brand shows up with clarity, confidence, and purpose across all platforms.</p>
-                
-                <h3>Branding</h3>
-                <p>Branding is the art of perception, and we approach it with clarity and intention. We craft elevated brand identities by thoughtfully defining visual elements, typography, color systems, and tone, ensuring your brand communicates with confidence, sophistication, and consistency across every touchpoint. With a focus on depth and direction, our process combines intentional design with strategic alignment to create branding that feels authentic, polished, and enduring. The result is a brand that stands out effortlessly while remaining timeless, adaptable, and built for long-term growth.</p>
-                
-                <h3>Logo Design</h3>
-                <p>A logo is the cornerstone of a brand's identity. We design logos with clarity, intention, and longevity. They reflect your brand's personality while remaining refined and versatile. Each emblem is carefully crafted to work seamlessly across digital platforms, print, packaging, and marketing material. Our focus is on creating marks that feel distinctive yet timeless, allowing your brand to be instantly recognizable and built to last.</p>
-                
-                <h3>Photography</h3>
-                <p>We offer brand-focused photography that captures more than just visuals; it captures presence. Every shoot is thoughtfully planned to reflect your brand's identity, aesthetic, and purpose, ensuring the imagery feels intentional and refined. From products to people and spaces, we create polished, high-quality visuals designed to elevate your brand's storytelling and maintain consistency across digital, print, and marketing platforms.</p>
-                
-                <h3>Videography</h3>
-                <p>We create refined, story-led video content designed to elevate your brand's presence. From concept development to filming and post-production, every detail is handled with intention. Our videography focuses on clarity, visual consistency, and storytelling—resulting in content that feels engaging, elevated, and aligned with your brand across digital platforms and marketing channels.</p>
-                
-                <h3>Package Design</h3>
-                <p>We design packaging that is both visually striking and thoughtfully functional. Our approach balances aesthetics with strategy. Your packaging reflects your brand's identity while enhancing the overall product experience. From structure to visuals and finishing details, every element is carefully considered to create packaging that stands out, feels premium, and leaves a lasting impression.</p>
-                
-                <h3>Collateral</h3>
-                <p>We design brand collateral that brings consistency and polish to every touchpoint. From pitch decks and brochures to marketing and presentation material, each piece is thoughtfully crafted to align with your brand's identity and messaging. Our focus is on clarity, visual refinement, and cohesion, ensuring your brand shows up professionally and confidently, both online and offline.</p>
-            </article>
-
-            <!-- Process -->
-            <article class="card" id="process">
-                <div class="card-title">Our Process</div>
-                <h2>From Concept to Campaign</h2>
-                <ul>
-                    <li><strong>Discovery:</strong> Understanding your brand, vision, and objectives.</li>
-                    <li><strong>Strategy:</strong> Defining direction, structure, and creative approach.</li>
-                    <li><strong>Execution:</strong> Delivering refined, intentional work.</li>
-                    <li><strong>Optimization:</strong> Reviewing, refining, and evolving for growth.</li>
-                </ul>
-            </article>
-
-            <!-- Who Is This For -->
-            <article class="card" id="portfolio">
-                <div class="card-title">Who Is This For?</div>
-                <h2>Brands That Value Clarity & Quality</h2>
-                <p>Our services are for brands and founders who value clarity, quality, and intention. We work best with businesses that want thoughtful strategy, refined visuals, and consistent execution, whether you're building from the ground up or refining an existing brand. If you're looking for long-term direction rather than quick fixes, you're in the right place.</p>
-            </article>
-
-            <!-- FAQs -->
-            <article class="card">
-                <div class="card-title">Frequently Asked Questions</div>
-                <h2>What You Need to Know</h2>
-                
-                <h3>What's your payment policy?</h3>
-                <p>All projects and retainers are paid in advance. This allows us to dedicate focused time, resources, and creative attention to your brand. Detailed payment terms are shared before onboarding to ensure complete transparency and alignment.</p>
-                
-                <h3>What's the retainer period?</h3>
-                <p>Our retainers typically run for a minimum of three months. This timeframe allows us to understand your brand deeply, implement strategy effectively, and deliver meaningful, consistent results. Longer-term retainers are recommended for sustained growth and ongoing brand evolution.</p>
-            </article>
-
-            <!-- Contact/CTA -->
-            <article class="card" id="contact">
-                <div class="card-title">Ready to Level Up?</div>
-                <h2>Let's Create Something Bold Together</h2>
-                <p>Whether you need a complete brand refresh or strategic marketing support, we're here to help your brand shine bold. Let's discuss how Madame Marketing can take your vision to the next level.</p>
-                <button class="cta-button" id="bookCallBtn">Book Your Consultation</button>
-            </article>
+    <!-- ============ HERO SECTION ============ -->
+    <section class="hero-section" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">Madame Marketing</div>
+            <h1 class="hero-title">
+                WE CRAFT BRANDS WITH <span class="accent-text">TASTE,</span>
+                <span class="accent-text">STRATEGY</span> &amp;
+                <span class="accent-text">CLARITY.</span>
+            </h1>
+            <p class="hero-subtitle">Where strategy meets taste. We don't just plan campaigns — we step in, take charge, and make your brand look, sound, and sell better.</p>
+            <div class="hero-actions">
+                <button class="hero-cta" id="bookCallBtn">Start the Experience</button>
+                <a href="#about" class="hero-secondary">Our Story →</a>
+            </div>
         </div>
-    </main>
+        <div class="hero-scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ============ ABOUT SECTION ============ -->
+    <section class="about-section" id="about">
+        <div class="section-container">
+            <div class="about-grid">
+                <div class="about-label">Our Short Story</div>
+                <div class="about-content">
+                    <h2 class="section-heading" data-text-reveal>Madame Marketing is not just an agency. It's a <em>marketing house</em> where strategy meets taste.</h2>
+                    <p class="about-text" data-text-reveal>We exist to bring structure, taste and clarity to brands' marketing. We work with brands that want marketing with direction, not noise. We step in, take control of the strategy, and execute work that feels aligned, elevated, and effective. No hand-offs. No confusion. Just focused, well-done work.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ MADE TO WORK SECTION ============ -->
+    <section class="showcase-section">
+        <div class="section-container">
+            <div class="showcase-header">
+                <h2 class="showcase-title">made to<br>work</h2>
+                <div class="showcase-description">
+                    <p class="showcase-tagline">WHERE IDEAS MEET EXECUTION, AND EXECUTION BECOMES IMPACT.</p>
+                    <a href="#contact" class="showcase-cta">Work With Us →</a>
+                </div>
+            </div>
+            <div class="showcase-visual">
+                <article class="title-card">
+                    <img src="assets/images/icons/Resized_Logo/3.png" alt="Madame Marketing" loading="lazy"/>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ SERVICES SECTION ============ -->
+    <section class="services-section" id="services">
+        <div class="section-container">
+            <div class="services-header">
+                <div class="services-label">Our Services</div>
+                <h2 class="services-title">Comprehensive Marketing Solutions</h2>
+            </div>
+            <div class="services-list">
+                <div class="service-item" data-service="brand-development">
+                    <span class="service-number">01</span>
+                    <span class="service-name">Brand Development</span>
+                    <span class="service-arrow">→</span>
+                    <div class="service-detail">
+                        <p>We help build brands from the ground up by shaping their positioning, voice, and overall direction. We work at the core of your brand, defining its positioning, voice, and direction before anything goes live.</p>
+                    </div>
+                </div>
+                <div class="service-item" data-service="social-media">
+                    <span class="service-number">02</span>
+                    <span class="service-name">Social Media</span>
+                    <span class="service-arrow">→</span>
+                    <div class="service-detail">
+                        <p>From strategic content planning to creation, filming, editing, and final publishing, we manage your social media presence end-to-end. Every reel, post, and caption is thoughtfully crafted to reflect your brand's identity.</p>
+                    </div>
+                </div>
+                <div class="service-item" data-service="branding">
+                    <span class="service-number">03</span>
+                    <span class="service-name">Branding</span>
+                    <span class="service-arrow">→</span>
+                    <div class="service-detail">
+                        <p>We craft elevated brand identities by thoughtfully defining visual elements, typography, color systems, and tone — ensuring your brand communicates with confidence, sophistication, and consistency.</p>
+                    </div>
+                </div>
+                <div class="service-item" data-service="logo-design">
+                    <span class="service-number">04</span>
+                    <span class="service-name">Logo Design</span>
+                    <span class="service-arrow">→</span>
+                    <div class="service-detail">
+                        <p>We design logos with clarity, intention, and longevity. Each emblem is carefully crafted to work seamlessly across digital platforms, print, packaging, and marketing material.</p>
+                    </div>
+                </div>
+                <div class="service-item" data-service="photography">
+                    <span class="service-number">05</span>
+                    <span class="service-name">Photography</span>
+                    <span class="service-arrow">→</span>
+                    <div class="service-detail">
+                        <p>We offer brand-focused photography that captures more than just visuals — it captures presence. Every shoot is thoughtfully planned to reflect your brand's identity, aesthetic, and purpose.</p>
+                    </div>
+                </div>
+                <div class="service-item" data-service="videography">
+                    <span class="service-number">06</span>
+                    <span class="service-name">Videography</span>
+                    <span class="service-arrow">→</span>
+                    <div class="service-detail">
+                        <p>We create refined, story-led video content designed to elevate your brand's presence. From concept development to filming and post-production, every detail is handled with intention.</p>
+                    </div>
+                </div>
+                <div class="service-item" data-service="package-design">
+                    <span class="service-number">07</span>
+                    <span class="service-name">Package Design</span>
+                    <span class="service-arrow">→</span>
+                    <div class="service-detail">
+                        <p>We design packaging that is both visually striking and thoughtfully functional. Your packaging reflects your brand's identity while enhancing the overall product experience.</p>
+                    </div>
+                </div>
+                <div class="service-item" data-service="collateral">
+                    <span class="service-number">08</span>
+                    <span class="service-name">Collateral</span>
+                    <span class="service-arrow">→</span>
+                    <div class="service-detail">
+                        <p>From pitch decks and brochures to marketing material, each piece is thoughtfully crafted to align with your brand's identity and messaging with clarity and visual refinement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PROCESS SECTION ============ -->
+    <section class="process-section" id="process">
+        <div class="section-container">
+            <div class="process-header">
+                <div class="process-label">Our Process</div>
+                <h2 class="process-title">From Concept<br>to Campaign</h2>
+            </div>
+            <div class="stack-wrap">
+                <div class="card">
+                    <div class="card-title">Step 01</div>
+                    <h2>Discovery</h2>
+                    <p>We begin every engagement by understanding your brand at its core — your vision, values, audience, and objectives. This phase uncovers opportunities, identifies challenges, and lays the groundwork for everything that follows.</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">Step 02</div>
+                    <h2>Strategy</h2>
+                    <p>With clarity in place, we define the direction. Our strategy maps out the structure, messaging, creative approach, and execution plan — ensuring alignment between where you are and where you want to be.</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">Step 03</div>
+                    <h2>Execution</h2>
+                    <p>Strategy becomes tangible. We produce refined, intentional work — from brand identities and content creation to campaigns and collateral. Every asset is crafted with precision. We take ownership and deliver work that moves the needle.</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">Step 04</div>
+                    <h2>Optimization</h2>
+                    <p>Growth is iterative. We review performance, refine the approach, and evolve with your brand. Through continuous analysis and strategic adjustments, we ensure your marketing stays relevant, effective, and aligned.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CLIENTS MARQUEE SECTION ============ -->
+    <section class="clients-section" id="clients">
+        <div class="section-container">
+            <div class="clients-header">
+                <h2 class="clients-title">the company<br>we keep</h2>
+                <p class="clients-tagline">FROM STARTUPS TO VISIONARIES, WE BUILD FOR BRANDS THAT VALUE CLARITY &amp; QUALITY.</p>
+            </div>
+        </div>
+        <div class="marquee-wrapper">
+            <div class="marquee-track">
+                <div class="marquee-item">Your Brand Here</div>
+                <div class="marquee-item">Client Logo</div>
+                <div class="marquee-item">Partner Brand</div>
+                <div class="marquee-item">Your Brand Here</div>
+                <div class="marquee-item">Client Logo</div>
+                <div class="marquee-item">Partner Brand</div>
+                <div class="marquee-item">Your Brand Here</div>
+                <div class="marquee-item">Client Logo</div>
+                <div class="marquee-item">Partner Brand</div>
+                <div class="marquee-item">Your Brand Here</div>
+                <div class="marquee-item">Client Logo</div>
+                <div class="marquee-item">Partner Brand</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FAQ SECTION ============ -->
+    <section class="faq-section">
+        <div class="section-container">
+            <div class="faq-header">
+                <div class="faq-label">FAQ</div>
+                <h2 class="faq-title">What You Need to Know</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What's your payment policy?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>All projects and retainers are paid in advance. This allows us to dedicate focused time, resources, and creative attention to your brand. Detailed payment terms are shared before onboarding to ensure complete transparency and alignment.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What's the retainer period?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our retainers typically run for a minimum of three months. This timeframe allows us to understand your brand deeply, implement strategy effectively, and deliver meaningful, consistent results.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Who is this for?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our services are for brands and founders who value clarity, quality, and intention. We work best with businesses that want thoughtful strategy, refined visuals, and consistent execution — whether you're building from the ground up or refining an existing brand.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CONTACT / CTA SECTION ============ -->
+    <section class="cta-section" id="contact">
+        <div class="section-container">
+            <div class="cta-content">
+                <h2 class="cta-quote" data-text-reveal>The future isn't waited for.</h2>
+                <h2 class="cta-quote accent-text" data-text-reveal>It's built. Daily.</h2>
+                <p class="cta-subtext">Whether you need a complete brand refresh or strategic marketing support, we're here to help your brand shine bold.</p>
+                <button class="hero-cta cta-book" id="bookCallBtn2">Book Your Consultation</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="site-footer">
+        <div class="section-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="assets/images/icons/Madam Marketing Final Transparent Coloured/2-crop.png" alt="Madame Marketing" loading="lazy">
+                        <span>Madame <strong>Marketing</strong></span>
+                    </div>
+                    <p class="footer-tagline">Where strategy meets taste.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigate</h4>
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#services">Services</a>
+                    <a href="#process">Process</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Instagram" class="social-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn" class="social-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                        </a>
+                        <a href="#" aria-label="WhatsApp" class="social-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>2026 © Madame Marketing. All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
 
     <!-- Booking Modal -->
     <div class="booking-modal" id="bookingModal">
@@ -161,8 +350,14 @@
             <h2 class="modal-title">Book Your Consultation</h2>
             
             <div class="booking-container">
+                <!-- Selected Date/Time Summary (shown when calendar is collapsed) -->
+                <div class="datetime-summary collapsed" id="dateTimeSummary">
+                    <span class="datetime-summary-text" id="summaryText">No date & time selected</span>
+                    <span class="datetime-summary-change">Change ▼</span>
+                </div>
+
                 <!-- Calendar Section -->
-                <div class="calendar-section">
+                <div class="calendar-section" id="calendarSection">
                     <div class="calendar-header">
                         <button class="calendar-nav" id="prevMonth">&lt;</button>
                         <h3 class="calendar-month" id="calendarMonth"></h3>
@@ -275,10 +470,11 @@
 
     <!-- JavaScript -->
     <script src="js/loader.js"></script>
-    <script src="js/animation.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/smooth-scroll.js"></script>
-    <script src="js/calendar-intergration.js"></script>
-    <script src="js/chatbot.js"></script>
+    <script src="js/animation.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/smooth-scroll.js" defer></script>
+    <script src="js/calendar-intergration.js" defer></script>
+    <script src="js/chatbot.js" defer></script>
+    <script src="js/services-interaction.js" defer></script>
 </body>
 </html>

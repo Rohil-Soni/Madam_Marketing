@@ -1,3 +1,7 @@
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
 /* Float Animation */
 @keyframes float {
     0%, 100% {
@@ -8,7 +12,7 @@
     }
 }
 
-/* Card Fade In Animation */
+/* Fade In Up */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -20,17 +24,35 @@
     }
 }
 
-/* Card Glow Pulse Animation */
+/* Fade In */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Slide In Left */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Card Glow Pulse */
 @keyframes glowPulse {
     0%, 100% {
-        box-shadow: 
+        box-shadow:
             0 30px 60px rgba(0, 0, 0, 0.6),
             0 15px 30px rgba(0, 0, 0, 0.4),
             inset 0 1px 0 rgba(255, 255, 255, 0.15),
             inset 0 -1px 0 rgba(0, 0, 0, 0.1);
     }
     50% {
-        box-shadow: 
+        box-shadow:
             0 30px 60px rgba(0, 0, 0, 0.6),
             0 15px 30px rgba(0, 0, 0, 0.4),
             0 0 40px rgba(220, 20, 60, 0.4),
@@ -39,17 +61,7 @@
     }
 }
 
-/* Smooth Scale Animation */
-@keyframes smoothScale {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.02);
-    }
-}
-
-/* Border Glow Animation */
+/* Border Glow */
 @keyframes borderGlow {
     0%, 100% {
         border-color: rgba(255, 255, 255, 0.18);
@@ -57,4 +69,70 @@
     50% {
         border-color: rgba(220, 20, 60, 0.5);
     }
+}
+
+/* Scroll-triggered reveal animations */
+.reveal {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+    transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1),
+                transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    will-change: transform, opacity;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.reveal-left {
+    opacity: 0;
+    transform: translate3d(-30px, 0, 0);
+    transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1),
+                transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    will-change: transform, opacity;
+}
+
+.reveal-left.visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+/* Stagger children */
+.stagger-children > * {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: transform, opacity;
+}
+
+.stagger-children.visible > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translate3d(0, 0, 0); }
+.stagger-children.visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translate3d(0, 0, 0); }
+.stagger-children.visible > *:nth-child(3) { transition-delay: 0.15s; opacity: 1; transform: translate3d(0, 0, 0); }
+.stagger-children.visible > *:nth-child(4) { transition-delay: 0.2s; opacity: 1; transform: translate3d(0, 0, 0); }
+.stagger-children.visible > *:nth-child(5) { transition-delay: 0.25s; opacity: 1; transform: translate3d(0, 0, 0); }
+.stagger-children.visible > *:nth-child(6) { transition-delay: 0.3s; opacity: 1; transform: translate3d(0, 0, 0); }
+.stagger-children.visible > *:nth-child(7) { transition-delay: 0.35s; opacity: 1; transform: translate3d(0, 0, 0); }
+.stagger-children.visible > *:nth-child(8) { transition-delay: 0.4s; opacity: 1; transform: translate3d(0, 0, 0); }
+
+/* ============================================
+   SCROLL TEXT REVEAL (reading animation)
+   ============================================ */
+
+.text-reveal .word {
+    display: inline-block;
+    opacity: 0.12;
+    transition: opacity 0.35s ease;
+    will-change: opacity;
+}
+
+.text-reveal .word.active {
+    opacity: 1;
+}
+
+/* Preserve styling inside em/italic within text-reveal */
+.text-reveal em .word {
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    color: var(--accent-soft);
 }
