@@ -1,332 +1,572 @@
 // ========================================
-// CHATBOT CONFIGURATION
+// CONVERSATIONAL ASSISTANT (CHATBOT)
 // ========================================
+
 const CHATBOT_CONFIG = {
     botName: "Madame Marketing Assistant",
-    greetingDelay: 9000, // milliseconds before showing greeting
-    greetingAutoDismiss: 13000, // milliseconds before auto-hiding greeting (12 seconds)
-    typingDelay: 1000, // milliseconds for typing animation
+    greetingAutoDismiss: 13000,
+    baseTypingDelay: 550,
+    maxTypingDelay: 1500,
+    showGreetingDelay: 6000
 };
 
-// Services database
-const SERVICES = {
-    'brand-strategy': {
-        name: 'Brand Strategy & Development',
-        description: 'Complete brand identity creation, positioning, and market strategy to establish your unique presence.',
-        questions: ['brand identity', 'positioning', 'strategy', 'rebrand']
+const SERVICE_KNOWLEDGE = {
+    "brand-development": {
+        name: "Brand Development",
+        summary: "Positioning, voice, and strategic direction for long-term brand clarity.",
+        useCases: ["new brand", "rebrand", "clarity", "positioning"]
     },
-    'logo-design': {
-        name: 'Logo & Visual Identity Design',
-        description: 'Custom logo design and complete visual identity systems that capture your brand essence.',
-        questions: ['logo', 'visual identity', 'design', 'branding']
+    "social-media": {
+        name: "Social Media",
+        summary: "Strategy, content planning, creation, editing, and publishing end-to-end.",
+        useCases: ["instagram", "consistency", "growth", "engagement"]
     },
-    'social-media': {
-        name: 'Social Media Management',
-        description: 'Full social media strategy, content creation, and community management to grow your online presence.',
-        questions: ['social media', 'instagram', 'facebook', 'content', 'posts']
+    "branding": {
+        name: "Branding",
+        summary: "Visual identity systems with typography, color, and tone consistency.",
+        useCases: ["brand look", "identity", "premium feel", "consistency"]
     },
-    'video-motion': {
-        name: 'Video & Motion Graphics',
-        description: 'Professional video production and motion graphics that bring your brand story to life.',
-        questions: ['video', 'motion graphics', 'animation', 'production']
+    "logo-design": {
+        name: "Logo Design",
+        summary: "Distinct logo concepts designed for digital, print, and packaging.",
+        useCases: ["logo", "mark", "identity refresh"]
+    },
+    photography: {
+        name: "Photography",
+        summary: "Brand-led photography crafted to capture mood, quality, and presence.",
+        useCases: ["product shoot", "campaign shoot", "brand visuals"]
+    },
+    videography: {
+        name: "Videography",
+        summary: "Story-driven video production from concept to post-production.",
+        useCases: ["reels", "ad films", "launch videos"]
+    },
+    "package-design": {
+        name: "Package Design",
+        summary: "Packaging that blends visual appeal with practical product experience.",
+        useCases: ["packaging", "retail shelf impact", "label design"]
+    },
+    collateral: {
+        name: "Collateral",
+        summary: "Pitch decks, brochures, and marketing assets aligned to your brand.",
+        useCases: ["deck", "brochure", "sales kit", "presentation"]
     }
 };
 
-// ========================================
-// DOM ELEMENTS
-// ========================================
-const chatbotButton = document.getElementById('chatbotButton');
-const chatbotPanel = document.getElementById('chatbotPanel');
-const chatbotClose = document.getElementById('chatbotClose');
-const chatbotMessages = document.getElementById('chatbotMessages');
-const chatbotInput = document.getElementById('chatbotInput');
-const chatbotSend = document.getElementById('chatbotSend');
-const quickRepliesContainer = document.getElementById('quickReplies');
-const chatGreeting = document.getElementById('chatGreeting');
-const greetingClose = document.getElementById('greetingClose');
-const chatNotification = document.getElementById('chatNotification');
+const QUICK_REPLY_SETS = {
+    intro: [
+        "I need help choosing services",
+        "I want to grow social media",
+        "I need a full rebrand",
+        "How does pricing work?"
+    ],
+    discovery: [
+        "Lead generation",
+        "Better brand identity",
+        "More content output",
+        "Not sure yet"
+    ],
+    nextStep: [
+        "Show recommended services",
+        "What budget should I plan?",
+        "Book a consultation",
+        "Ask another question"
+    ]
+};
 
-// ========================================
-// STATE MANAGEMENT
-// ========================================
-let conversationState = 'greeting';
-let userNeeds = [];
+const CLARIFICATION_REPLY = "I am sorry, I did not fully understand that yet. Could you rephrase it in one line? You can tell me your goal, ask about pricing, or say book a consultation.";
 
-// ========================================
-// INITIALIZATION
-// ========================================
+const DOM = {
+    chatbotButton: document.getElementById("chatbotButton"),
+    chatbotPanel: document.getElementById("chatbotPanel"),
+    chatbotClose: document.getElementById("chatbotClose"),
+    chatbotMessages: document.getElementById("chatbotMessages"),
+    chatbotInput: document.getElementById("chatbotInput"),
+    chatbotSend: document.getElementById("chatbotSend"),
+    quickRepliesContainer: document.getElementById("quickReplies"),
+    chatGreeting: document.getElementById("chatGreeting"),
+    greetingClose: document.getElementById("greetingClose"),
+    chatNotification: document.getElementById("chatNotification")
+};
+
+const conversation = {
+    stage: "idle",
+    history: [],
+    profile: {
+        name: "",
+        business: "",
+        goal: "",
+        budget: "",
+        timeline: "",
+        serviceInterest: ""
+    },
+    asked: {
+        goal: false,
+        budget: false,
+        timeline: false
+    },
+    suggestions: []
+};
+
 function initChatbot() {
-    // Close greeting bubble
-    greetingClose.addEventListener('click', () => {
-        chatGreeting.classList.add('hidden');
-        chatNotification.classList.add('hidden');
+    if (!DOM.chatbotButton || !DOM.chatbotPanel) return;
+
+    DOM.greetingClose.addEventListener("click", () => {
+        DOM.chatGreeting.classList.add("hidden");
+        DOM.chatNotification.classList.add("hidden");
     });
-    
-    // Open/close chatbot on button click (toggle)
-    chatbotButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (chatbotPanel.classList.contains('open')) {
+
+    DOM.chatbotButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (DOM.chatbotPanel.classList.contains("open")) {
             closeChatbot();
         } else {
             openChatbot();
         }
     });
-    
-    chatGreeting.addEventListener('click', openChatbot);
-    
-    // Close chatbot
-    chatbotClose.addEventListener('click', closeChatbot);
-    
-    // Close chatbot when clicking outside
-    document.addEventListener('click', (e) => {
-        if (chatbotPanel.classList.contains('open')) {
-            // Check if click is outside both panel and button
-            if (!chatbotPanel.contains(e.target) && !chatbotButton.contains(e.target)) {
-                closeChatbot();
-            }
+
+    DOM.chatGreeting.addEventListener("click", openChatbot);
+    DOM.chatbotClose.addEventListener("click", closeChatbot);
+
+    document.addEventListener("click", (event) => {
+        if (!DOM.chatbotPanel.classList.contains("open")) return;
+        if (!DOM.chatbotPanel.contains(event.target) && !DOM.chatbotButton.contains(event.target)) {
+            closeChatbot();
         }
     });
-    
-    // Prevent closing when clicking inside the panel
-    chatbotPanel.addEventListener('click', (e) => {
-        e.stopPropagation();
+
+    DOM.chatbotPanel.addEventListener("click", (event) => {
+        event.stopPropagation();
     });
-    
-    // Send message
-    chatbotSend.addEventListener('click', sendMessage);
-    chatbotInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendMessage();
+
+    DOM.chatbotSend.addEventListener("click", sendMessage);
+    DOM.chatbotInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") sendMessage();
+    });
+
+    DOM.quickRepliesContainer.addEventListener("click", (event) => {
+        const replyBtn = event.target.closest(".quick-reply");
+        if (!replyBtn) return;
+        handleQuickReply(replyBtn.textContent);
+    });
+
+    DOM.chatbotMessages.addEventListener("click", (event) => {
+        const serviceCard = event.target.closest(".service-card[data-service]");
+        if (!serviceCard) return;
+        const serviceKey = serviceCard.getAttribute("data-service");
+        handleServiceSelection(serviceKey);
     });
 }
 
 function openChatbot() {
-    // Add blur effect to body
-    document.body.classList.add('chatbot-active');
-    
-    // Delay panel opening slightly for smooth animation
+    document.body.classList.add("chatbot-active");
     setTimeout(() => {
-        document.body.classList.add('blur-active');
-        chatbotPanel.classList.add('open');
+        document.body.classList.add("blur-active");
+        DOM.chatbotPanel.classList.add("open");
     }, 50);
-    
-    chatGreeting.classList.add('hidden');
-    chatNotification.classList.add('hidden');
-    
-    // Initialize conversation if first time
-    if (chatbotMessages.children.length === 0) {
+
+    DOM.chatGreeting.classList.add("hidden");
+    DOM.chatNotification.classList.add("hidden");
+
+    if (DOM.chatbotMessages.children.length === 0) {
         startConversation();
     }
 }
 
 function closeChatbot() {
-    chatbotPanel.classList.remove('open');
-    document.body.classList.remove('blur-active');
-    document.body.classList.remove('chatbot-active');
+    DOM.chatbotPanel.classList.remove("open");
+    document.body.classList.remove("blur-active");
+    document.body.classList.remove("chatbot-active");
 }
 
-// ========================================
-// CONVERSATION FLOW
-// ========================================
 function startConversation() {
-    addBotMessage("👋 Hi there! I'm here to help you find the perfect marketing solution for your brand.");
-    
-    setTimeout(() => {
-        addBotMessage("What brings you to Madame Marketing today?");
-        showQuickReplies([
-            "I need help with branding",
-            "I want to improve social media",
-            "I need video content",
-            "I'm not sure what I need"
-        ]);
-    }, 1500);
+    conversation.stage = "intro";
+
+    addBotMessage("Hi, I am your Madame Marketing assistant. Tell me what you are trying to achieve right now and I will help you map the right next step.");
+    addBotMessage("For example: better leads, stronger brand identity, more social content, or a full launch.", { queue: true });
+    showQuickReplies(QUICK_REPLY_SETS.intro);
 }
 
-function handleUserResponse(message) {
-    const lowerMessage = message.toLowerCase();
-    
-    // Detect service intent
-    if (conversationState === 'greeting' || conversationState === 'exploring') {
-        if (lowerMessage.includes('not sure') || lowerMessage.includes('help me choose')) {
-            conversationState = 'needs-assessment';
-            askNeedsAssessment();
-        } else if (lowerMessage.includes('brand') || lowerMessage.includes('logo') || lowerMessage.includes('identity')) {
-            suggestBrandingServices();
-        } else if (lowerMessage.includes('social') || lowerMessage.includes('instagram') || lowerMessage.includes('facebook')) {
-            suggestService('social-media');
-        } else if (lowerMessage.includes('video') || lowerMessage.includes('motion') || lowerMessage.includes('animation')) {
-            suggestService('video-motion');
-        } else {
-            // General response
-            addBotMessage("Great! Let me show you our services to help you find the best fit.");
-            showAllServices();
-        }
-    } else if (conversationState === 'needs-assessment') {
-        assessNeeds(lowerMessage);
+function sendMessage() {
+    const message = DOM.chatbotInput.value.trim();
+    if (!message) return;
+
+    addUserMessage(message);
+    DOM.chatbotInput.value = "";
+    clearQuickReplies();
+
+    setTimeout(() => {
+        processUserMessage(message);
+    }, 180);
+}
+
+function handleQuickReply(reply) {
+    addUserMessage(reply);
+    clearQuickReplies();
+    setTimeout(() => processUserMessage(reply), 120);
+}
+
+function processUserMessage(message) {
+    const clean = normalizeText(message);
+    const intents = detectIntents(clean);
+
+    captureProfile(clean);
+    conversation.history.push({ role: "user", text: message, intents });
+
+    if (intents.includes("booking")) {
+        respondWithBooking();
+        return;
     }
+
+    if (intents.includes("pricing")) {
+        respondWithPricing();
+        return;
+    }
+
+    if (intents.includes("greeting")) {
+        respondWithGreeting();
+        return;
+    }
+
+    if (intents.includes("plan")) {
+        respondWithPlan();
+        return;
+    }
+
+    if (intents.includes("show-services")) {
+        recommendServices([], clean);
+        return;
+    }
+
+    if (intents.includes("done")) {
+        addBotMessage("Great. I am here whenever you want to continue planning your marketing roadmap.");
+        showQuickReplies(["Restart recommendations", "Book a consultation", "How does pricing work?"]);
+        return;
+    }
+
+    if (intents.includes("faq-payment")) {
+        addBotMessage("We work with advance payments for projects and retainers. It keeps planning and execution focused and predictable.");
+        showQuickReplies(["How long is the retainer?", "Book a consultation", "Show services"]);
+        return;
+    }
+
+    if (intents.includes("faq-retainer")) {
+        addBotMessage("Retainers usually start at a 3-month minimum so strategy, content, and performance can compound.");
+        showQuickReplies(["What services fit me?", "How does pricing work?", "Book a consultation"]);
+        return;
+    }
+
+    if (intents.includes("thanks")) {
+        addBotMessage("Happy to help. If you want, I can now suggest a package based on your goal and timeline.");
+        showQuickReplies(QUICK_REPLY_SETS.nextStep);
+        return;
+    }
+
+    if (intents.some((intent) => intent.startsWith("service-")) || intents.includes("service-general")) {
+        recommendServices(intents, clean);
+        return;
+    }
+
+    if (conversation.stage === "intro" || conversation.stage === "discovery") {
+        runDiscoveryFollowUp(clean);
+        return;
+    }
+
+    respondWithClarification();
 }
 
-function askNeedsAssessment() {
-    addBotMessage("No problem! I'll help you figure it out. Let's start with a few questions:");
-    
-    setTimeout(() => {
-        addBotMessage("What's your main goal right now?");
-        showQuickReplies([
-            "Build brand awareness",
-            "Increase online presence",
-            "Create content",
-            "Full brand makeover"
-        ]);
-    }, 1500);
+function runDiscoveryFollowUp(cleanMessage) {
+    if (!conversation.profile.goal) {
+        respondWithClarification();
+        conversation.asked.goal = true;
+        conversation.stage = "discovery";
+        return;
+    }
+
+    if (!conversation.profile.timeline && !conversation.asked.timeline) {
+        addBotMessage("Helpful. What timeline are you working with: immediate, this month, or next quarter?");
+        showQuickReplies(["Immediate", "This month", "Next quarter", "Flexible"]);
+        conversation.asked.timeline = true;
+        conversation.stage = "discovery";
+        return;
+    }
+
+    recommendServices([], cleanMessage);
 }
 
-function assessNeeds(response) {
-    if (response.includes('awareness') || response.includes('makeover') || response.includes('brand')) {
-        addBotMessage("Perfect! It sounds like you need comprehensive branding services.");
-        suggestBrandingServices();
-    } else if (response.includes('online') || response.includes('presence') || response.includes('social')) {
-        addBotMessage("Great! Social media management would be perfect for you.");
-        suggestService('social-media');
-    } else if (response.includes('content') || response.includes('video')) {
-        addBotMessage("Excellent! Video content can really boost your engagement.");
-        suggestService('video-motion');
+function recommendServices(intents, message) {
+    const recommended = pickServices(intents, message);
+    conversation.suggestions = recommended;
+    conversation.stage = "recommend";
+
+    const lead = buildPersonalizedLead();
+    addBotMessage(lead);
+
+    if (recommended.length === 0) {
+        addBotMessage("I suggest we start with a quick discovery call so we can map your exact mix of services.", { queue: true });
+        showQuickReplies(["Book a consultation", "How does pricing work?", "Ask another question"]);
+        return;
+    }
+
+    addBotMessage(buildServiceCards(recommended), { html: true, queue: true });
+    addBotMessage("Pick one service card and I will break down what the first 2 weeks would look like.", { queue: true });
+    showQuickReplies(QUICK_REPLY_SETS.nextStep);
+}
+
+function respondWithPricing() {
+    conversation.stage = "discovery";
+    addBotMessage("Pricing is scoped to your goals, timeline, and deliverables. We usually define options after a short strategy call so the quote matches your actual needs.");
+
+    if (!conversation.profile.goal) {
+        addBotMessage("If you share your primary goal, I can suggest the best entry point before the call.", { queue: true });
+        showQuickReplies(QUICK_REPLY_SETS.discovery);
     } else {
-        addBotMessage("Based on what you've shared, here are my recommendations:");
-        showAllServices();
+        showQuickReplies(["Show recommended services", "Book a consultation", "What is included in a retainer?"]);
     }
 }
 
-function suggestBrandingServices() {
-    addBotMessage("For branding, we offer two comprehensive services:");
-    
+function respondWithBooking() {
+    addBotMessage("Great, I will open the consultation form now.");
     setTimeout(() => {
-        const servicesHTML = `
-            <div class="service-card" onclick="selectService('brand-strategy')">
-                <h4>${SERVICES['brand-strategy'].name}</h4>
-                <p>${SERVICES['brand-strategy'].description}</p>
-            </div>
-            <div class="service-card" onclick="selectService('logo-design')">
-                <h4>${SERVICES['logo-design'].name}</h4>
-                <p>${SERVICES['logo-design'].description}</p>
-            </div>
-        `;
-        addBotMessage(servicesHTML);
-        
-        setTimeout(() => {
-            addBotMessage("Click on any service to learn more, or I can help you explore other options!");
-            showQuickReplies([
-                "Tell me about social media",
-                "Show me video services",
-                "I want to book a call"
-            ]);
-        }, 1000);
-    }, 800);
+        openBookingModal();
+        addBotMessage("The booking form is open. Share your details and preferred time, and the team will take it from there.");
+        showQuickReplies(["Before booking, show services", "How does pricing work?", "Done"]);
+    }, 700);
 }
 
-function suggestService(serviceKey) {
-    const service = SERVICES[serviceKey];
-    
-    const serviceHTML = `
-        <div class="service-card" onclick="selectService('${serviceKey}')">
-            <h4>${service.name}</h4>
-            <p>${service.description}</p>
-        </div>
-    `;
-    
-    addBotMessage(serviceHTML);
-    
-    setTimeout(() => {
-        addBotMessage("Does this sound like what you need?");
-        showQuickReplies([
-            "Yes, tell me more!",
-            "Show other services",
-            "Book a consultation"
-        ]);
-    }, 1000);
+function respondWithPlan() {
+    const chosen = SERVICE_KNOWLEDGE[conversation.profile.serviceInterest];
+
+    if (!chosen) {
+        addBotMessage("I can do that. First, pick one recommended service so I can tailor a month-one roadmap.");
+        showQuickReplies(["Show recommended services", "Book a consultation"]);
+        return;
+    }
+
+    addBotMessage(`Month one for ${chosen.name}: Week 1 discovery and audit, Week 2 strategic direction and concepting, Week 3 production and execution, Week 4 review and optimization.`);
+    addBotMessage("If you want, we can lock this into a formal scope during a consultation call.", { queue: true });
+    showQuickReplies(["Book a consultation", "Show another service", "How does pricing work?"]);
 }
 
-function showAllServices() {
-    setTimeout(() => {
-        let servicesHTML = '<div style="display: flex; flex-direction: column; gap: 12px;">';
-        
-        Object.keys(SERVICES).forEach(key => {
-            const service = SERVICES[key];
-            servicesHTML += `
-                <div class="service-card" onclick="selectService('${key}')">
+function respondWithGreeting() {
+    const name = conversation.profile.name ? ` ${conversation.profile.name}` : "";
+    const stageAwarePrompt = conversation.profile.goal
+        ? "Want me to continue from where we left off and suggest services for your goal?"
+        : "What are you working on right now: brand, social media, content, or a full launch?";
+
+    addBotMessage(`Hi${name}. Great to meet you.`);
+    addBotMessage(stageAwarePrompt, { queue: true });
+
+    if (conversation.profile.goal) {
+        showQuickReplies(["Show recommended services", "How does pricing work?", "Book a consultation"]);
+    } else {
+        showQuickReplies(["I need help choosing services", "I want to grow social media", "I need a full rebrand"]);
+    }
+}
+
+function respondWithClarification() {
+    addBotMessage(CLARIFICATION_REPLY);
+    showQuickReplies(["I need help choosing services", "How does pricing work?", "Book a consultation"]);
+}
+
+function handleServiceSelection(serviceKey) {
+    const service = SERVICE_KNOWLEDGE[serviceKey];
+    if (!service) return;
+
+    conversation.profile.serviceInterest = serviceKey;
+    addUserMessage(`Tell me more about ${service.name}`);
+
+    const detail = `${service.name} is a strong fit for ${conversation.profile.goal || "your current objective"}. We usually start with a discovery sprint, then move into execution with weekly progress touchpoints.`;
+    addBotMessage(detail);
+    addBotMessage("Would you like a recommended plan for month one, or should I open the booking form?", { queue: true });
+    showQuickReplies(["Give me a month-one plan", "Book a consultation", "Show another service"]);
+}
+
+function detectIntents(message) {
+    const intents = [];
+
+    if (hasAny(message, ["book", "consultation", "call", "schedule", "meeting"])) intents.push("booking");
+    if (hasAny(message, ["price", "pricing", "cost", "budget", "fee", "quotation", "quote"])) intents.push("pricing");
+    if (isGreetingMessage(message)) intents.push("greeting");
+    if (hasAny(message, ["payment", "advance payment", "pay upfront"])) intents.push("faq-payment");
+    if (hasAny(message, ["retainer", "minimum period", "how long"])) intents.push("faq-retainer");
+    if (hasAny(message, ["thanks", "thank you", "perfect", "great"])) intents.push("thanks");
+    if (hasAny(message, ["month-one", "month one", "plan", "roadmap"])) intents.push("plan");
+    if (hasAny(message, ["show another service", "show services", "other services"])) intents.push("show-services");
+    if (hasAny(message, ["done", "thats all", "that's all", "finished"])) intents.push("done");
+
+    if (hasAny(message, ["social", "instagram", "content", "reels", "tiktok"])) intents.push("service-social");
+    if (hasAny(message, ["brand", "rebrand", "positioning", "identity", "branding"])) intents.push("service-brand");
+    if (hasAny(message, ["logo", "visual mark"])) intents.push("service-logo");
+    if (hasAny(message, ["photo", "photography", "shoot"])) intents.push("service-photo");
+    if (hasAny(message, ["video", "videography", "motion", "production"])) intents.push("service-video");
+    if (hasAny(message, ["packaging", "package design", "label"])) intents.push("service-package");
+    if (hasAny(message, ["brochure", "deck", "collateral", "presentation"])) intents.push("service-collateral");
+
+    if (intents.length === 0 && hasAny(message, ["service", "help", "not sure", "confused", "where to start"])) {
+        intents.push("service-general");
+    }
+
+    return intents;
+}
+
+function pickServices(intents, message) {
+    const picks = new Set();
+
+    if (intents.includes("service-social")) picks.add("social-media");
+    if (intents.includes("service-brand")) {
+        picks.add("brand-development");
+        picks.add("branding");
+    }
+    if (intents.includes("service-logo")) picks.add("logo-design");
+    if (intents.includes("service-photo")) picks.add("photography");
+    if (intents.includes("service-video")) picks.add("videography");
+    if (intents.includes("service-package")) picks.add("package-design");
+    if (intents.includes("service-collateral")) picks.add("collateral");
+
+    if (picks.size === 0) {
+        if (hasAny(message, ["launch", "new brand", "start from scratch"])) {
+            picks.add("brand-development");
+            picks.add("branding");
+            picks.add("social-media");
+        } else if (hasAny(message, ["sales", "leads", "conversion"])) {
+            picks.add("social-media");
+            picks.add("videography");
+            picks.add("collateral");
+        }
+    }
+
+    return Array.from(picks).slice(0, 3);
+}
+
+function buildServiceCards(serviceKeys) {
+    return serviceKeys
+        .map((key) => {
+            const service = SERVICE_KNOWLEDGE[key];
+            return `
+                <div class="service-card" data-service="${key}">
                     <h4>${service.name}</h4>
-                    <p>${service.description}</p>
+                    <p>${service.summary}</p>
                 </div>
             `;
-        });
-        
-        servicesHTML += '</div>';
-        addBotMessage(servicesHTML);
-        
-        setTimeout(() => {
-            addBotMessage("Click any service to learn more, or let's schedule a call to discuss your needs!");
-            showQuickReplies([
-                "Book a consultation",
-                "Ask a question"
-            ]);
-        }, 1000);
-    }, 800);
+        })
+        .join("");
 }
 
-// Make selectService global so onclick can access it
-window.selectService = function(serviceKey) {
-    const service = SERVICES[serviceKey];
-    
-    addUserMessage(`Tell me more about ${service.name}`);
-    
-    setTimeout(() => {
-        addBotMessage(`Great choice! ${service.name} is perfect for businesses looking to ${service.description.toLowerCase()}`);
-        
-        setTimeout(() => {
-            addBotMessage("Would you like to book a free consultation to discuss this service in detail?");
-            showQuickReplies([
-                "Yes, book a call!",
-                "Learn about pricing",
-                "See other services"
-            ]);
-        }, 1500);
-    }, 1000);
-};
+function buildPersonalizedLead() {
+    const nameBit = conversation.profile.name ? `${conversation.profile.name}, ` : "";
+    const goalBit = conversation.profile.goal || "what you described";
+    return `${nameBit}based on ${goalBit}, here are the services I would shortlist first.`;
+}
 
-// ========================================
-// MESSAGE FUNCTIONS
-// ========================================
-function addBotMessage(content) {
+function captureProfile(message) {
+    const nameMatch = message.match(/\b(i am|i'm|my name is)\s+([a-z]{2,20})\b/i);
+    if (nameMatch && !conversation.profile.name) {
+        conversation.profile.name = capitalize(nameMatch[2]);
+    }
+
+    const businessMatch = message.match(/\b(i run|we run|my business is|our company is)\s+([a-z0-9\s&-]{3,50})/i);
+    if (businessMatch && !conversation.profile.business) {
+        conversation.profile.business = businessMatch[2].trim();
+    }
+
+    if (!conversation.profile.goal && hasAny(message, ["lead", "awareness", "identity", "sales", "content", "launch", "growth"])) {
+        conversation.profile.goal = message;
+    }
+
+    const budgetMatch = message.match(/\b(\d{2,6})(k)?\b/i);
+    if (budgetMatch && hasAny(message, ["budget", "price", "cost"])) {
+        conversation.profile.budget = `${budgetMatch[1]}${budgetMatch[2] ? "k" : ""}`;
+    }
+
+    if (!conversation.profile.timeline) {
+        if (hasAny(message, ["urgent", "asap", "immediately"])) conversation.profile.timeline = "immediate";
+        if (hasAny(message, ["this month", "2 weeks", "3 weeks", "4 weeks"])) conversation.profile.timeline = "this month";
+        if (hasAny(message, ["next quarter", "3 months", "q2", "q3", "q4"])) conversation.profile.timeline = "next quarter";
+        if (hasAny(message, ["flexible", "no rush"])) conversation.profile.timeline = "flexible";
+    }
+}
+
+function hasAny(text, keywords) {
+    return keywords.some((keyword) => text.includes(keyword));
+}
+
+function isGreetingMessage(text) {
+    return /\b(hi|hello|hey|yo|good morning|good afternoon|good evening|namaste)\b/.test(text);
+}
+
+function normalizeText(text) {
+    return text.toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function capitalize(value) {
+    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+}
+
+function addBotMessage(content, options = {}) {
+    const { html = false, queue = false } = options;
+    const delay = getTypingDelay(content, queue);
+
     showTypingIndicator();
-    
+
     setTimeout(() => {
         removeTypingIndicator();
-        
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', 'bot');
-        messageDiv.innerHTML = `
-            <div class="message-avatar">M</div>
-            <div class="message-bubble">${content}</div>
-        `;
-        
-        chatbotMessages.appendChild(messageDiv);
+
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", "bot");
+
+        const avatar = document.createElement("div");
+        avatar.classList.add("message-avatar");
+        avatar.textContent = "M";
+
+        const bubble = document.createElement("div");
+        bubble.classList.add("message-bubble");
+
+        if (html) {
+            bubble.innerHTML = content;
+        } else {
+            bubble.textContent = content;
+        }
+
+        messageDiv.appendChild(avatar);
+        messageDiv.appendChild(bubble);
+
+        DOM.chatbotMessages.appendChild(messageDiv);
         scrollToBottom();
-    }, CHATBOT_CONFIG.typingDelay);
+    }, delay);
 }
 
 function addUserMessage(content) {
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('message', 'user');
-    messageDiv.innerHTML = `
-        <div class="message-bubble">${content}</div>
-        <div class="message-avatar">You</div>
-    `;
-    
-    chatbotMessages.appendChild(messageDiv);
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message", "user");
+
+    const bubble = document.createElement("div");
+    bubble.classList.add("message-bubble");
+    bubble.textContent = content;
+
+    const avatar = document.createElement("div");
+    avatar.classList.add("message-avatar");
+    avatar.textContent = "You";
+
+    messageDiv.appendChild(bubble);
+    messageDiv.appendChild(avatar);
+
+    DOM.chatbotMessages.appendChild(messageDiv);
     scrollToBottom();
 }
 
+function getTypingDelay(content, queued) {
+    const textLength = String(content).replace(/<[^>]*>/g, "").length;
+    const variableDelay = CHATBOT_CONFIG.baseTypingDelay + Math.min(textLength * 10, 800);
+    const delayed = Math.min(variableDelay, CHATBOT_CONFIG.maxTypingDelay);
+    return queued ? delayed + 220 : delayed;
+}
+
 function showTypingIndicator() {
-    const typingDiv = document.createElement('div');
-    typingDiv.classList.add('message', 'bot', 'typing');
+    removeTypingIndicator();
+
+    const typingDiv = document.createElement("div");
+    typingDiv.classList.add("message", "bot", "typing");
     typingDiv.innerHTML = `
         <div class="message-avatar">M</div>
         <div class="typing-indicator">
@@ -335,102 +575,67 @@ function showTypingIndicator() {
             <div class="typing-dot"></div>
         </div>
     `;
-    
-    chatbotMessages.appendChild(typingDiv);
+
+    DOM.chatbotMessages.appendChild(typingDiv);
     scrollToBottom();
 }
 
 function removeTypingIndicator() {
-    const typing = chatbotMessages.querySelector('.typing');
+    const typing = DOM.chatbotMessages.querySelector(".typing");
     if (typing) typing.remove();
 }
 
 function showQuickReplies(replies) {
-    quickRepliesContainer.innerHTML = '';
-    
-    replies.forEach(reply => {
-        const button = document.createElement('button');
-        button.classList.add('quick-reply');
+    clearQuickReplies();
+
+    replies.forEach((reply) => {
+        const button = document.createElement("button");
+        button.classList.add("quick-reply");
+        button.type = "button";
         button.textContent = reply;
-        button.onclick = () => handleQuickReply(reply);
-        quickRepliesContainer.appendChild(button);
+        DOM.quickRepliesContainer.appendChild(button);
     });
 }
 
-function handleQuickReply(reply) {
-    addUserMessage(reply);
-    quickRepliesContainer.innerHTML = '';
-    
-    const lowerReply = reply.toLowerCase();
-    
-    if (lowerReply.includes('book') || lowerReply.includes('consultation') || lowerReply.includes('call')) {
-        setTimeout(() => {
-            addBotMessage("Excellent! Let me open our booking calendar for you.");
-            setTimeout(() => {
-                document.getElementById('bookCallBtn').click();
-                addBotMessage("The booking form is now open. Fill in your details and choose a convenient time! 📅");
-            }, 1000);
-        }, 800);
-    } else if (lowerReply.includes('pricing')) {
-        setTimeout(() => {
-            addBotMessage("Our pricing is customized based on your specific needs. I recommend booking a free consultation so we can provide you with an accurate quote tailored to your project.");
-            showQuickReplies([
-                "Book a consultation",
-                "Ask another question"
-            ]);
-        }, 1000);
-    } else if (lowerReply.includes('other services') || lowerReply.includes('show')) {
-        showAllServices();
-    } else {
-        handleUserResponse(reply);
+function clearQuickReplies() {
+    DOM.quickRepliesContainer.innerHTML = "";
+}
+
+function openBookingModal() {
+    const primaryButton = document.getElementById("bookCallBtn");
+    if (primaryButton) {
+        primaryButton.click();
+        return;
+    }
+
+    const modal = document.getElementById("bookingModal");
+    if (modal) {
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
     }
 }
 
-function sendMessage() {
-    const message = chatbotInput.value.trim();
-    if (!message) return;
-    
-    addUserMessage(message);
-    chatbotInput.value = '';
-    quickRepliesContainer.innerHTML = '';
-    
-    setTimeout(() => {
-        handleUserResponse(message);
-    }, 500);
-}
-
 function scrollToBottom() {
-    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    DOM.chatbotMessages.scrollTop = DOM.chatbotMessages.scrollHeight;
 }
 
-// ========================================
-// INITIALIZE ON LOAD
-// ========================================
-let pageLoaded = false;
+window.addEventListener("load", () => {
+    if (!DOM.chatGreeting || !DOM.chatNotification) return;
 
-window.addEventListener('load', () => {
-    pageLoaded = true;
-});
+    const showGreeting = () => {
+        DOM.chatGreeting.classList.add("show");
 
-document.addEventListener('DOMContentLoaded', () => {
-    initChatbot();
-    
-    // Wait for page loader to finish (5 seconds) + additional delay
-    const showGreetingDelay = 6000; // Show 1 second after loader finishes
-    
-    setTimeout(() => {
-        // Show greeting with smooth animation
-        chatGreeting.classList.add('show');
-        
-        // Auto-dismiss greeting after it's been visible
         setTimeout(() => {
-            if (!chatGreeting.classList.contains('hidden')) {
-                chatGreeting.classList.remove('show');
-                setTimeout(() => {
-                    chatGreeting.classList.add('hidden');
-                    chatNotification.classList.remove('hidden');
-                }, 600); // Wait for fade out animation
-            }
+            if (DOM.chatGreeting.classList.contains("hidden")) return;
+            DOM.chatGreeting.classList.remove("show");
+            setTimeout(() => {
+                DOM.chatGreeting.classList.add("hidden");
+                DOM.chatNotification.classList.remove("hidden");
+            }, 600);
         }, CHATBOT_CONFIG.greetingAutoDismiss);
-    }, showGreetingDelay);
+    };
+
+    setTimeout(showGreeting, CHATBOT_CONFIG.showGreetingDelay);
 });
+
+document.addEventListener("DOMContentLoaded", initChatbot);

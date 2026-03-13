@@ -158,7 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Now batch all writes
         const start = windowHeight * 0.85;
-        const end = windowHeight * 0.15;
+        // Complete reveal when the text reaches the middle of the viewport.
+        const end = windowHeight * 0.5;
         const range = start - end;
 
         for (let i = 0; i < textRevealData.length; i++) {
