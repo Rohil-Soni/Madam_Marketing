@@ -77,7 +77,7 @@
 
 .greeting-close:hover {
     background: rgba(220, 20, 60, 0.2);
-    color: #DC143C;
+    color: #93061d;
 }
 
 .chat-greeting.hidden {
@@ -89,7 +89,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #DC143C 0%, #A52A2A 100%);
+    background: linear-gradient(135deg, #93061d 0%, #93061d 100%);
     border: none;
     box-shadow: 
         0 8px 24px rgba(220, 20, 60, 0.4),
@@ -135,7 +135,7 @@
     right: -4px;
     width: 24px;
     height: 24px;
-    background: #DC143C;
+    background: #93061d;
     color: white;
     border-radius: 50%;
     border: 3px solid white;
@@ -194,7 +194,7 @@
 
 /* Chatbot Header */
 .chatbot-header {
-    background: linear-gradient(135deg, #DC143C 0%, #A52A2A 100%);
+    background: linear-gradient(135deg, #93061d 0%, #93061d 100%);
     padding: 20px;
     display: flex;
     align-items: center;
@@ -315,7 +315,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #DC143C 0%, #A52A2A 100%);
+    background: linear-gradient(135deg, #93061d 0%, #93061d 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -366,7 +366,7 @@
 .typing-dot {
     width: 8px;
     height: 8px;
-    background: #DC143C;
+    background: #93061d;
     border-radius: 50%;
     animation: typingDot 1.4s infinite;
 }
@@ -454,7 +454,7 @@
     width: 44px;
     height: 44px;
     border: none;
-    background: #DC143C;
+    background: #93061d;
     color: white;
     border-radius: 50%;
     cursor: pointer;
@@ -465,7 +465,7 @@
 }
 
 .chatbot-send:hover {
-    background: #A52A2A;
+    background: #93061d;
     transform: scale(1.1);
 }
 
@@ -491,7 +491,7 @@
 }
 
 .service-card h4 {
-    color: #DC143C;
+    color: #93061d;
     margin: 0 0 8px 0;
     font-size: 1rem;
 }

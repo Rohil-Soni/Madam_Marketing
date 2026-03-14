@@ -62,7 +62,7 @@
     font-weight: 700;
     letter-spacing: 4px;
     text-transform: uppercase;
-    background: linear-gradient(135deg, #DC143C 0%, #EE6A70 100%);
+    background: linear-gradient(135deg, #93061d 0%, #93061d 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -78,7 +78,7 @@
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #DC143C, transparent);
+    background: linear-gradient(90deg, transparent, #93061d, transparent);
     animation: underlineExpand 1.5s ease forwards 1s;
 }
 
@@ -115,7 +115,7 @@
 .loader-dot {
     width: 10px;
     height: 10px;
-    background: #DC143C;
+    background: #93061d;
     border-radius: 50%;
     animation: dotPulse 1.4s ease-in-out infinite;
 }

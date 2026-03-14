@@ -1,8 +1,8 @@
 :root {
     --bg: #050509;
     --card: #06050a;
-    --accent: #DC143C;
-    --accent-soft: #EE6A70;
+    --accent: #93061d;
+    --accent-soft: #93061d;
     --top: 90px;
     --gap: 16px;
 }

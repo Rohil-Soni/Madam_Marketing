@@ -6,8 +6,8 @@
 :root {
     --bg: #000000;
     --card: #111111;
-    --accent: #DC143C;
-    --accent-soft: #EE6A70;
+    --accent: #93061d;
+    --accent-soft: #93061d;
     --white: #ffffff;
     --top: 100px;
     --gap: 16px;
@@ -561,7 +561,7 @@ nav {
 
 .title-card img {
     max-width: 40%;
-    max-height: 50%;
+    max-height: 100%;
     width: auto;
     height: auto;
     object-fit: contain;
@@ -822,7 +822,7 @@ nav {
 
 /* Card color variants */
 .card-red {
-    background: #DC143C;
+    background: #93061d;
     border: none;
 }
 
@@ -848,7 +848,7 @@ nav {
 }
 
 .card-white .card-title {
-    color: #DC143C;
+    color: #93061d;
 }
 
 .card-white h2 {
@@ -869,7 +869,7 @@ nav {
 }
 
 .card-black .card-title {
-    color: #DC143C;
+    color: #93061d;
 }
 
 .card-black h2 {
