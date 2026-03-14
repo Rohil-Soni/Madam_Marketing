@@ -173,6 +173,14 @@ nav {
     flex-shrink: 0;
 }
 
+.nav-logo-text {
+    color: var(--white);
+}
+
+.nav-logo-text strong {
+    color: var(--accent);
+}
+
 .nav-logo img {
     height: clamp(36px, 5vh, 48px);
     width: clamp(44px, 6vw, 58px);
@@ -190,10 +198,7 @@ nav {
     gap: 0;
 }
 
-.nav-logo span {
-    color: var(--accent);
-    margin-left: 0.2em;
-}
+
 
 /* Pill-shaped nav menu */
 .nav-menu {
