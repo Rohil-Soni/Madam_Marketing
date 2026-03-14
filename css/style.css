@@ -3,6 +3,30 @@
    Cherry Red, White & Black theme
    ============================================ */
 
+@font-face {
+    font-family: 'InterVar';
+    src: url('../assets/font/Inter-Variable.ttf') format('truetype');
+    font-weight: 300 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'PlayfairVar';
+    src: url('../assets/font/PlayfairDisplay-Variable.ttf') format('truetype');
+    font-weight: 400 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'PlayfairVar';
+    src: url('../assets/font/PlayfairDisplay-Italic-Variable.ttf') format('truetype');
+    font-weight: 400 900;
+    font-style: italic;
+    font-display: swap;
+}
+
 :root {
     --bg: #000000;
     --card: #111111;
@@ -13,6 +37,9 @@
     --gap: 16px;
     --section-padding: clamp(80px, 12vh, 160px);
     --container-width: min(1200px, 90vw);
+    --font-body: 'InterVar', 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-ui: 'InterVar', 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-display: 'PlayfairVar', 'Playfair Display', Georgia, 'Times New Roman', serif;
 }
 
 * {
@@ -23,7 +50,7 @@
 
 body {
     min-height: 100vh;
-    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-body);
     color: var(--white);
     background: var(--bg);
     position: relative;
@@ -34,6 +61,8 @@ body {
     --cursor-size: 1px;
     --circle-x: 50%;
     --circle-y: 50%;
+    letter-spacing: 0.01em;
+    text-rendering: optimizeLegibility;
 }
 
 body::after {
@@ -134,8 +163,9 @@ nav {
 }
 
 .nav-logo {
+    font-family: var(--font-display);
     font-size: clamp(1.2rem, 2vw, 1.6rem);
-    font-weight: 700;
+    font-weight: 600;
     color: white;
     display: flex;
     align-items: center;
@@ -180,6 +210,7 @@ nav {
 }
 
 .nav-menu a {
+    font-family: var(--font-ui);
     color: rgba(255, 255, 255, 0.75);
     text-decoration: none;
     font-size: clamp(0.78rem, 1vw, 0.88rem);
@@ -307,6 +338,7 @@ nav {
 }
 
 .hero-badge {
+    font-family: var(--font-ui);
     display: inline-block;
     font-size: 0.75rem;
     letter-spacing: 0.35em;
@@ -320,17 +352,18 @@ nav {
 }
 
 .hero-title {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-display);
     font-size: clamp(2.5rem, 6vw, 5.5rem);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    text-transform: none;
     color: white;
     margin-bottom: 32px;
 }
 
 .hero-subtitle {
+    font-family: var(--font-body);
     font-size: clamp(0.95rem, 1.3vw, 1.15rem);
     color: rgba(255, 255, 255, 0.6);
     max-width: 600px;
@@ -347,6 +380,7 @@ nav {
 }
 
 .hero-cta {
+    font-family: var(--font-ui);
     padding: 16px 40px;
     background: var(--accent);
     border: none;
@@ -370,6 +404,7 @@ nav {
 }
 
 .hero-secondary {
+    font-family: var(--font-ui);
     color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     font-size: 0.9rem;
@@ -461,8 +496,9 @@ nav {
 }
 
 .section-heading {
+    font-family: var(--font-display);
     font-size: clamp(1.5rem, 2.5vw, 2.2rem);
-    font-weight: 600;
+    font-weight: 650;
     line-height: 1.4;
     color: white;
     margin-bottom: 24px;
@@ -470,7 +506,7 @@ nav {
 
 .section-heading em {
     font-style: italic;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-display);
     color: var(--accent-soft);
 }
 
@@ -499,8 +535,10 @@ nav {
 }
 
 .showcase-title {
+    font-family: var(--font-display);
     font-size: clamp(3rem, 8vw, 7rem);
-    font-weight: 900;
+    font-style: italic;
+    font-weight: 700;
     line-height: 0.9;
     text-transform: lowercase;
     color: white;
@@ -604,8 +642,9 @@ nav {
 }
 
 .services-title {
+    font-family: var(--font-display);
     font-size: clamp(1.8rem, 3vw, 2.5rem);
-    font-weight: 700;
+    font-weight: 650;
     color: white;
 }
 
@@ -651,12 +690,14 @@ nav {
     color: rgba(255, 255, 255, 0.25);
     font-weight: 600;
     letter-spacing: 0.1em;
-    font-family: 'Inter', monospace;
+    font-family: var(--font-ui);
+    font-variant-numeric: tabular-nums;
 }
 
 .service-name {
+    font-family: var(--font-body);
     font-size: clamp(1.2rem, 2vw, 1.6rem);
-    font-weight: 600;
+    font-weight: 650;
     color: rgba(255, 255, 255, 0.8);
     transition: color 0.3s ease;
     position: relative;
@@ -733,8 +774,9 @@ nav {
 }
 
 .process-title {
+    font-family: var(--font-display);
     font-size: clamp(2rem, 4vw, 3.5rem);
-    font-weight: 800;
+    font-weight: 700;
     color: white;
     line-height: 1.1;
 }
@@ -901,8 +943,10 @@ nav {
 }
 
 .clients-title {
+    font-family: var(--font-display);
     font-size: clamp(2.5rem, 5vw, 4.5rem);
-    font-weight: 900;
+    font-style: italic;
+    font-weight: 700;
     color: white;
     line-height: 1;
     text-transform: lowercase;
@@ -1006,8 +1050,9 @@ nav {
 }
 
 .faq-title {
+    font-family: var(--font-display);
     font-size: clamp(1.5rem, 2.5vw, 2rem);
-    font-weight: 700;
+    font-weight: 650;
     color: white;
 }
 
@@ -1030,6 +1075,7 @@ nav {
 }
 
 .faq-question span:first-child {
+    font-family: var(--font-body);
     font-size: 1.05rem;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.8);
@@ -1103,8 +1149,9 @@ nav {
 }
 
 .cta-quote {
+    font-family: var(--font-display);
     font-size: clamp(2rem, 4vw, 3.5rem);
-    font-weight: 800;
+    font-weight: 700;
     color: white;
     line-height: 1.2;
     margin-bottom: 8px;
@@ -1154,6 +1201,7 @@ nav {
 }
 
 .footer-logo span {
+    font-family: var(--font-display);
     font-size: 1.1rem;
     color: white;
     font-weight: 400;
@@ -1167,11 +1215,12 @@ nav {
     font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.35);
     font-style: italic;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-display);
 }
 
 .footer-links h4,
 .footer-social h4 {
+    font-family: var(--font-ui);
     font-size: 0.7rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
@@ -1181,6 +1230,7 @@ nav {
 }
 
 .footer-links a {
+    font-family: var(--font-body);
     display: block;
     color: rgba(255, 255, 255, 0.5);
     text-decoration: none;

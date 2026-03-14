@@ -133,6 +133,6 @@
 /* Preserve styling inside em/italic within text-reveal */
 .text-reveal em .word {
     font-style: italic;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-display, 'Playfair Display', serif);
     color: var(--accent-soft);
 }
